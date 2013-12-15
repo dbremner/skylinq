@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace SkyLinq.Linq
 {
+    /// <summary>
+    /// Reusable DFS and BFS implementations. See http://weblogs.asp.net/lichen/archive/2013/11/16/linq-to-graph.aspx for more information.
+    /// </summary>
     public static class LinqToGraph
     {
         public static IEnumerable<TLeaf> DFS<TInner, TLeaf>(TInner node, Func<TInner, IEnumerable<TInner>> getInners, 

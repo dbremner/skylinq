@@ -36,6 +36,7 @@
     <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LinqExt.cs" />
     <Compile Include="LinqToDelimited.cs" />
     <Compile Include="LinqToText.cs" />
     <Compile Include="LinqToGraph.cs" />
