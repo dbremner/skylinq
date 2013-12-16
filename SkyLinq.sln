@@ -7,6 +7,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkyLinq.Linq", "SkyLinq.Lin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkyLinq.Sample", "SkyLinq.Sample\SkyLinq.Sample.csproj", "{C66486CB-F383-48E8-9A9D-E2EB237194F9}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{8FBAB3ED-8C18-4FFD-AFD2-A99EF67AFACC}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkyLinq.Web", "SkyLinq.Web\SkyLinq.Web.csproj", "{192AF149-733E-4378-9E27-699B0F065A8C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +30,10 @@ Global
 		{C66486CB-F383-48E8-9A9D-E2EB237194F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C66486CB-F383-48E8-9A9D-E2EB237194F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C66486CB-F383-48E8-9A9D-E2EB237194F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{192AF149-733E-4378-9E27-699B0F065A8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{192AF149-733E-4378-9E27-699B0F065A8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{192AF149-733E-4378-9E27-699B0F065A8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{192AF149-733E-4378-9E27-699B0F065A8C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -27,13 +27,31 @@ namespace SkyLinq.Linq
             return _headersDictionary[header];
         }
 
+        public virtual bool TryGetColumnNo(string header, out int columnNo)
+        {
+            return _headersDictionary.TryGetValue(header, out columnNo);
+        }
+
         public virtual int GetColumnNo(int i)
         {
             return i;
         }
+
+        public virtual bool ContainsColumn(string header)
+        {
+            return _headersDictionary.ContainsKey(header);
+        }
+
+        public virtual IEnumerable<string> Headers
+        {
+            get
+            {
+                return _headers;
+            }
+        }
     }
 
-    public class Record
+    public class Record : IReadOnlyDictionary<string, string>
     {
         protected ColumnMapper _mapper;
         protected string[] _fields;
@@ -52,6 +70,51 @@ namespace SkyLinq.Linq
         public string this[string header]
         {
             get { return _fields[_mapper.GetColumnNo(header)]; }
+        }
+
+        public bool ContainsKey(string key)
+        {
+            return _mapper.ContainsColumn(key);
+        }
+
+        public IEnumerable<string> Keys
+        {
+            get { return _mapper.Headers; }
+        }
+
+        public bool TryGetValue(string key, out string value)
+        {
+            int columnNo;
+            if (_mapper.TryGetColumnNo(key, out columnNo))
+            {
+                value = _fields[columnNo];
+                return true;
+            }
+            else
+            {
+                value = null;
+                return false;
+            }
+        }
+
+        public IEnumerable<string> Values
+        {
+            get { return _fields; }
+        }
+
+        public int Count
+        {
+            get { return _fields.Length; }
+        }
+
+        public IEnumerator<KeyValuePair<string, string>> GetEnumerator()
+        {
+            return _mapper.Headers.Zip(_fields, (h, v) => new KeyValuePair<string, string>(h, v)).GetEnumerator();
+        }
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
         }
     }
 
