@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkyLinq.Linq", "SkyLinq.Linq\SkyLinq.Linq.csproj", "{88C4084B-6643-45FE-9687-857999A230A4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkyLinq.Sample", "SkyLinq.Sample\SkyLinq.Sample.csproj", "{C66486CB-F383-48E8-9A9D-E2EB237194F9}"
@@ -15,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{8FBAB3
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkyLinq.Web", "SkyLinq.Web\SkyLinq.Web.csproj", "{192AF149-733E-4378-9E27-699B0F065A8C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkyLinq.Web.Http", "SkyLinq.Web.Http\SkyLinq.Web.Http.csproj", "{A9D3670E-50EC-4EA6-B310-35478E44180D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -34,6 +34,10 @@ Global
 		{192AF149-733E-4378-9E27-699B0F065A8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{192AF149-733E-4378-9E27-699B0F065A8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{192AF149-733E-4378-9E27-699B0F065A8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9D3670E-50EC-4EA6-B310-35478E44180D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9D3670E-50EC-4EA6-B310-35478E44180D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9D3670E-50EC-4EA6-B310-35478E44180D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9D3670E-50EC-4EA6-B310-35478E44180D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

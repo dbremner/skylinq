@@ -194,6 +194,10 @@
       <Project>{88c4084b-6643-45fe-9687-857999a230a4}</Project>
       <Name>SkyLinq.Linq</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SkyLinq.Web.Http\SkyLinq.Web.Http.csproj">
+      <Project>{a9d3670e-50ec-4ea6-b310-35478e44180d}</Project>
+      <Name>SkyLinq.Web.Http</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
