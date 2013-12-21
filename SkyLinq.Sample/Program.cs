@@ -13,7 +13,9 @@ namespace SkyLinq.Sample
         {
             //new LingToGraphSample().Run();
 
-            new LinqToW3SVCLogSample().Run();
+            //new LinqToW3SVCLogSample().Run();
+
+            new HttpClientSample().Run();
 
             Console.Read();
         }
