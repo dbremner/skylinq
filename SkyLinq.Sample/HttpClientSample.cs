@@ -14,10 +14,11 @@ namespace SkyLinq.Sample
         {
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri("http://localhost:53473");
-            //client.DefaultRequestHeaders.Accept.Add(
-            //    new MediaTypeWithQualityHeaderValue("application/xml"));
+            //var mediaType = "application/json";
+            //var mediaType = "application/xml";
+            var mediaType = "application/csv";
             client.DefaultRequestHeaders.Accept.Add(
-                new MediaTypeWithQualityHeaderValue("application/json"));
+                new MediaTypeWithQualityHeaderValue(mediaType));
             HttpResponseMessage response = client.GetAsync("api/log").Result;
             if (response.IsSuccessStatusCode)
             {

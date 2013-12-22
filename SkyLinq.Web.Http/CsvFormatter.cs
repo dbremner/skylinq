@@ -20,6 +20,11 @@ namespace SkyLinq.Web.Http
             SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/csv"));
         }
 
+        /// <summary>
+        /// Only support IEnumerable<IDictionary<string, TValue>> at this time. TValue can be anything.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
         public override bool CanWriteType(Type type)
         {
             if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(IEnumerable<>))
@@ -54,29 +59,58 @@ namespace SkyLinq.Web.Http
                 var rows = value as IEnumerable;
                 if (rows != null)
                 {
-                    foreach (var row in rows)
+                    int rowNo = 0;
+                    //row must be IDictionary which support IEnumerable
+                    foreach (IEnumerable row in rows)
                     {
-
+                        rowNo++;
+                        if (rowNo == 1)
+                        {
+                            //First row, write the column header
+                            WriteHeaders(writer, row);
+                            writer.WriteLine();
+                        }
+                        else
+                        {
+                            writer.WriteLine();
+                        }
+                        WriteValues(writer, row);
                     }
                 }
             }
             writeStream.Close();
         }
 
-        static char[] _specialChars = new char[] { ',', '\n', '\r', '"' };
-
-        private string Escape(object o)
+        private static void WriteValues(StreamWriter writer, IEnumerable row)
         {
-            if (o == null)
+            int colNo = 0;
+            foreach (dynamic kvp in row)
             {
-                return "";
+                colNo++;
+                if (colNo > 1)
+                    writer.Write(',');
+                object val = kvp.Value;
+                if (val != null)
+                {
+                    Type valType = val.GetType();
+                    if (valType.IsPrimitive || valType == typeof(DateTime))
+                        writer.Write("{0}", val);
+                    else
+                        writer.Write("\"{0}\"", val.ToString().Replace("\"", "\"\""));
+                }
             }
-            string field = o.ToString();
-            if (field.IndexOfAny(_specialChars) != -1)
+        }
+
+        private static void WriteHeaders(StreamWriter writer, IEnumerable row)
+        {
+            int colNo = 0;
+            foreach (dynamic kvp in row)
             {
-                return String.Format("\"{0}\"", field.Replace("\"", "\"\""));
+                colNo++;
+                if (colNo > 1)
+                    writer.Write(',');
+                writer.Write("\"{0}\"", kvp.Key);
             }
-            else return field;
         }
     }
 }
