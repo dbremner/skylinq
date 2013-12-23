@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    @Scripts.Render("~/Scripts/d3.v3.js")
+}
+
+<div id="rpt"></div>
+
+@section scripts {
+    <script type="text/javascript">
+    d3.csv("api/logapi", function(data) {
+        console.log(data);
+        d3.select("#rpt")
+            .data(data)
+            .enter()
+            .append("div")
+            .text(function (d) { return "<div>" + d.URIStem + "</div><div>" + d.count + "</div>"; })
+    });
+    </script>
+}
+

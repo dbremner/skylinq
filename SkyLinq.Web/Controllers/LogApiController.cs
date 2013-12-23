@@ -8,7 +8,7 @@ using SkyLinq.Web.Models;
 
 namespace SkyLinq.Web.Controllers
 {
-    public class LogController : ApiController
+    public class LogApiController : ApiController
     {
         public IEnumerable<IDictionary<string, object>> GetTop()
         {
