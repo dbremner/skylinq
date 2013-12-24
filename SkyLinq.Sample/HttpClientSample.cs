@@ -16,7 +16,7 @@ namespace SkyLinq.Sample
             client.BaseAddress = new Uri("http://localhost:53473");
             //var mediaType = "application/json";
             //var mediaType = "application/xml";
-            var mediaType = "application/csv";
+            var mediaType = "text/csv";
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue(mediaType));
             HttpResponseMessage response = client.GetAsync("api/logapi").Result;
