@@ -1,7 +1,9 @@
 ﻿@{
     ViewBag.Title = "Index";
 }
-
+<style type="text/css">
+    .bar { background-color:blue; border: 1px solid black; height:10px;}
+</style>
 <div id="rpt"></div>
 
 @section scripts {
@@ -9,11 +11,16 @@
 <script type="text/javascript">
     d3.csv("api/logapi", function(data) {
         console.log(data);
-        d3.select("#rpt")
+        var max = d3.max(data, function (d) { return +d.count; })
+        var div = d3.select("#rpt").selectAll("div")
             .data(data)
             .enter()
-            .append("div")
-            .text(function (d) { return "<div>" + d.URIStem + "</div><div>" + d.count + "</div>"; })
+            .append("div").classed("row", true);
+
+        div.append("div").classed("col-md-6", true).text(function (d) { return d.URIStem; });
+        div.append("div").classed("col-md-1", true).style("text-align", "right").text(function (d) { return d.count; });
+        div.append("div").classed("col-md-5", true).append("div").classed("bar", true).style("width", function (d) { return (d.count / max * 400) + "px"; });
+        //    .html(function (d) { return "<div>" + d.URIStem + "</div><div>" + d.count + "</div>"; })
     });
 </script>
 }
