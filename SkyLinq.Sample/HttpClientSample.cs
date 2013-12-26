@@ -19,7 +19,7 @@ namespace SkyLinq.Sample
             var mediaType = "text/csv";
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue(mediaType));
-            HttpResponseMessage response = client.GetAsync("api/logapi").Result;
+            HttpResponseMessage response = client.GetAsync("api/logapi/GetTopPages").Result;
             if (response.IsSuccessStatusCode)
             {
                 Console.WriteLine(response.Content.ReadAsStringAsync().Result);

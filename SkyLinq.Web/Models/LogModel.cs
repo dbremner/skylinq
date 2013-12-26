@@ -16,6 +16,11 @@ namespace SkyLinq.Web.Models
                 .SelectMany(path => LingToText.EnumLines(File.OpenText(path)));
         }
 
+        public IEnumerable<W3SVCLogRecord> GetLogRecords()
+        {
+            return _lines.EnumW3SVCLogRecords();
+        }
+
         public IEnumerable<IDictionary<string, object>> GetTop(string column, string direction = "DESC", int count = 20)
         {
             var records = _lines.EnumW3SVCLogRecords();

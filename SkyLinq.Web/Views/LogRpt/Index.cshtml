@@ -4,24 +4,34 @@
 <style type="text/css">
     .bar { background-color:blue; border: 1px solid black; height:10px;}
 </style>
+<div><a href="Javascript:getReport('api/logapi/GetTopUrls')">Get top 25 URLs</a></div>
+<div><a href="Javascript:getReport('api/logapi/GetTopPages')">Get top 25 ASP/ASP.NET Pages</a></div>
+<div><a href="Javascript:getReport('api/logapi/GetTopFileTypes')">Get top 25 File Types</a></div>
+<div><a href="Javascript:getReport('api/logapi/GetTopClientIPs')">Get top 25 Client IPs</a></div>
+<div><a href="Javascript:getReport('api/logapi/GetHitsByHour')">Get Hits by hour</a></div>
+<div><a href="Javascript:getReport('api/logapi/GetHitsByMethods')">Get Hits by methods</a></div>
+<div><a href="Javascript:getReport('api/logapi/GetTopUserAgents')">Get top user agents</a></div>
+<div><a href="Javascript:getReport('api/logapi/GetTopErrors')">Get top errors</a></div>
 <div id="rpt"></div>
-
 @section scripts {
 <script src="@Url.Content("Scripts/d3.v3.js")" data-main="Scripts/main"></script>
 <script type="text/javascript">
-    d3.csv("api/logapi", function(data) {
-        console.log(data);
-        var max = d3.max(data, function (d) { return +d.count; })
-        var div = d3.select("#rpt").selectAll("div")
-            .data(data)
-            .enter()
-            .append("div").classed("row", true);
+    function getReport(apiUrl) {
+        d3.select("#rpt").html("");
+        d3.csv(apiUrl, function (data) {
+            console.log(data);
+            var max = d3.max(data, function (d) { return +d.Hits; })
+            var div = d3.select("#rpt").selectAll("div")
+                .data(data)
+                .enter()
+                .append("div").classed("row", true);
 
-        div.append("div").classed("col-md-6", true).text(function (d) { return d.URIStem; });
-        div.append("div").classed("col-md-1", true).style("text-align", "right").text(function (d) { return d.count; });
-        div.append("div").classed("col-md-5", true).append("div").classed("bar", true).style("width", function (d) { return (d.count / max * 400) + "px"; });
-        //    .html(function (d) { return "<div>" + d.URIStem + "</div><div>" + d.count + "</div>"; })
-    });
+            div.append("div").classed("col-md-6", true).text(function (d) { return d.Url; });
+            div.append("div").classed("col-md-1", true).style("text-align", "right").text(function (d) { return d.Hits; });
+            div.append("div").classed("col-md-5", true).append("div").classed("bar", true).style("width", function (d) { return (d.Hits / max * 400) + "px"; });
+            //    .html(function (d) { return "<div>" + d.URIStem + "</div><div>" + d.count + "</div>"; })
+        });
+    };
 </script>
 }
 
