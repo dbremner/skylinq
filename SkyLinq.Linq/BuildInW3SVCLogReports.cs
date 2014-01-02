@@ -22,7 +22,7 @@ namespace SkyLinq.Linq
             return report(records);
         }
 
-        [Display(Description = "Get top 25 URLs")]
+        [Display(Description = "Get Top 25 URLs")]
         public static IEnumerable<IDictionary<string, object>> GetTopUrls(this IEnumerable<W3SVCLogRecord> records)
         {
             var uriStems = records
@@ -30,7 +30,7 @@ namespace SkyLinq.Linq
             return GetTopCounts(uriStems);
         }
 
-        [Display(Description = "Get top user agents")]
+        [Display(Description = "Get Top User Agents")]
         public static IEnumerable<IDictionary<string, object>> GetTopUserAgents(this IEnumerable<W3SVCLogRecord> records)
         {
             var uriStems = records
@@ -38,7 +38,7 @@ namespace SkyLinq.Linq
             return GetTopCounts(uriStems);
         }
 
-        [Display(Description = "Get top 25 ASP/ASP.NET Pages")]
+        [Display(Description = "Get Top 25 ASP/ASP.NET Pages")]
         public static IEnumerable<IDictionary<string, object>> GetTopPages(this IEnumerable<W3SVCLogRecord> records)
         {
             var uriStems = records
@@ -47,35 +47,35 @@ namespace SkyLinq.Linq
             return GetTopCounts(uriStems);
         }
 
-        [Display(Description = "Get top 25 File Types")]
+        [Display(Description = "Get Top 25 File Types")]
         public static IEnumerable<IDictionary<string, object>> GetTopFileTypes(this IEnumerable<W3SVCLogRecord> records)
         {
             var filetypes = records.Select(r => Path.GetExtension(r.URIStem));
             return GetTopCounts(filetypes);
         }
 
-        [Display(Description = "Get top 25 Client IPs")]
+        [Display(Description = "Get Top 25 Client IPs")]
         public static IEnumerable<IDictionary<string, object>> GetTopClientIPs(this IEnumerable<W3SVCLogRecord> records)
         {
             var clientIPs = records.Select(r => r.ClientIP);
             return GetTopCounts(clientIPs);
         }
 
-        [Display(Description = "Get Hits by hour")]
+        [Display(Description = "Get Hits By Hour")]
         public static IEnumerable<IDictionary<string, object>> GetHitsByHour(this IEnumerable<W3SVCLogRecord> records)
         {
             var hours = records.Select(r => ((r.DateTime.Hour + 18) % 24).ToString("00"));
             return GetCounts(hours);
         }
 
-        [Display(Description = "Get Hits by methods")]
+        [Display(Description = "Get Hits By Methods")]
         public static IEnumerable<IDictionary<string, object>> GetHitsByMethods(this IEnumerable<W3SVCLogRecord> records)
         {
             var methods = records.Select(r => r.Method);
             return GetCounts(methods);
         }
 
-        [Display(Description = "Get top errors")]
+        [Display(Description = "Get Top Errors")]
         public static IEnumerable<IDictionary<string, object>> GetTopErrors(this IEnumerable<W3SVCLogRecord> records)
         {
             var methods = records

@@ -18,7 +18,8 @@ namespace SkyLinq.Web.Models
                 .Select(m => new string[] {
                     m.Name.Substring(3),
                     ((DisplayAttribute)m.GetCustomAttribute(typeof(DisplayAttribute))).Description
-                });
+                })
+                .OrderBy(ss => ss[1]);
         }
     }
 }
