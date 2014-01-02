@@ -32,8 +32,12 @@ namespace SkyLinq.Web.Models
         private void SetUpAzureStorage()
         {
             // Retrieve storage account from connection string.
+            var connStr = ConfigurationManager.ConnectionStrings["StorageConnectionString"];
+            if (connStr == null)
+                throw new Exception("StorageConnectionString not configured.");
+
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse(
-                ConfigurationManager.ConnectionStrings["StorageConnectionString"].ConnectionString);
+                connStr.ConnectionString);
 
             Uri containUri = storageAccount.BlobStorageUri.PrimaryUri;
 
