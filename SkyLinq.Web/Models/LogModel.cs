@@ -3,36 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.IO;
+using System.Reflection;
+using System.ComponentModel.DataAnnotations;
 using SkyLinq.Linq;
 
 namespace SkyLinq.Web.Models
 {
     public class LogModel
     {
-        private IEnumerable<string> _lines;
-        public LogModel(string directory)
+        public IEnumerable<string[]> GetReports()
         {
-            _lines = Directory.EnumerateFiles(directory)
-                .SelectMany(path => LingToText.EnumLines(File.OpenText(path)));
-        }
-
-        public IEnumerable<W3SVCLogRecord> GetLogRecords()
-        {
-            return _lines.EnumW3SVCLogRecords();
-        }
-
-        public IEnumerable<IDictionary<string, object>> GetTop(string column, string direction = "DESC", int count = 20)
-        {
-            var records = _lines.EnumW3SVCLogRecords();
-
-            var uriStems = records.Select(r => r.URIStem);
-            var uriStemsOrderByCount = uriStems
-                //.Where(us => us.EndsWith(".aspx") || us.EndsWith(".asp"))
-                .GroupBy(us => us, (us, uss) => new KeyValuePair<string, int>(us, uss.Count()))
-                .OrderByDescending(kv => kv.Value)
-                .Select(kv => new Dictionary<string, object>() { { column, kv.Key} , { "count", kv.Value } })
-                .Take(20);
-            return uriStemsOrderByCount;
+            return typeof(BuildInW3SVCLogReports).GetMethods(BindingFlags.Public | BindingFlags.Static)
+                .Where(m => m.Name.StartsWith("Get"))
+                .Select(m => new string[] {
+                    m.Name.Substring(3),
+                    ((DisplayAttribute)m.GetCustomAttribute(typeof(DisplayAttribute))).Description
+                });
         }
     }
 }

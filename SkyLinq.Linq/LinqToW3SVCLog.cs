@@ -145,7 +145,12 @@ namespace SkyLinq.Linq
             .Split(' ');
         internal static IDictionary<string, int> masterDict = masterHeaders.ToPositionDictionary();
 
-        public static IEnumerable<W3SVCLogRecord> EnumW3SVCLogRecords(this IEnumerable<string> lines)
+        /// <summary>
+        /// Convert W3SVC log lines to W3SVCLogRecord objects
+        /// </summary>
+        /// <param name="lines"></param>
+        /// <returns></returns>
+        public static IEnumerable<W3SVCLogRecord> AsW3SVCLogRecords(this IEnumerable<string> lines)
         {
             return lines.EnumRecords(
                 (n, s) =>

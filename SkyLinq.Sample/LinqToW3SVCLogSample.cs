@@ -70,7 +70,7 @@ namespace SkyLinq.Sample
 
         private static void QueryW3SVCLogUisngLingToW3SVCLog(IEnumerable<string> lines)
         {
-            var records = lines.EnumW3SVCLogRecords();
+            var records = lines.AsW3SVCLogRecords();
 
             var uriStems = records.Select(r => r.URIStem);
             var uriStemsOrderByCount = uriStems

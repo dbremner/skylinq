@@ -1,17 +1,14 @@
-﻿@{
+﻿@using SkyLinq.Web.Models
+@model LogModel
+@{
     ViewBag.Title = "Index";
 }
 <style type="text/css">
     .bar { background-color:blue; border: 1px solid black; height:10px;}
 </style>
-<div><a href="Javascript:getReport('api/logapi/GetTopUrls')">Get top 25 URLs</a></div>
-<div><a href="Javascript:getReport('api/logapi/GetTopPages')">Get top 25 ASP/ASP.NET Pages</a></div>
-<div><a href="Javascript:getReport('api/logapi/GetTopFileTypes')">Get top 25 File Types</a></div>
-<div><a href="Javascript:getReport('api/logapi/GetTopClientIPs')">Get top 25 Client IPs</a></div>
-<div><a href="Javascript:getReport('api/logapi/GetHitsByHour')">Get Hits by hour</a></div>
-<div><a href="Javascript:getReport('api/logapi/GetHitsByMethods')">Get Hits by methods</a></div>
-<div><a href="Javascript:getReport('api/logapi/GetTopUserAgents')">Get top user agents</a></div>
-<div><a href="Javascript:getReport('api/logapi/GetTopErrors')">Get top errors</a></div>
+@foreach (string[] report in Model.GetReports()) { 
+    <div><a href="Javascript:getReport('api/logapi/@report[0]')">@report[1]</a></div>
+}
 <div id="rpt"></div>
 @section scripts {
 <script src="@Url.Content("Scripts/d3.v3.js")" data-main="Scripts/main"></script>
