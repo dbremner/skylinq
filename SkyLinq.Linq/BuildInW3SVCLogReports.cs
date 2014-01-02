@@ -43,7 +43,7 @@ namespace SkyLinq.Linq
         {
             var uriStems = records
                 .Select(r => r.URIStem)
-                .Where(us => us.EndsWith(".aspx") || us.EndsWith(".asp"));
+                .Where(us => us.EndsWith(".aspx") || us.EndsWith(".asp") || us.IndexOf('.') < 0);
             return GetTopCounts(uriStems);
         }
 
