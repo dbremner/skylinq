@@ -37,13 +37,10 @@ namespace SkyLinq.Web.Models
             if (connStr == null || string.IsNullOrEmpty(connStr.ConnectionString))
                 throw new Exception("StorageConnectionString not configured.");
 
-            Trace.Write("StorageConnectionString=" + connStr.ConnectionString);
-
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse(
                 connStr.ConnectionString);
 
             Uri storageUri = storageAccount.BlobStorageUri.PrimaryUri;
-            Trace.Write("storageUri=" + storageUri.AbsoluteUri);
 
             // Create the blob client.
             CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
@@ -54,13 +51,9 @@ namespace SkyLinq.Web.Models
 
             _lines = container.ListBlobs(null, true)
                 .OfType<CloudBlockBlob>()
-                //.AsParallel()
+                .AsParallel()
                 .SelectMany(item =>
             {
-                //if (item is CloudBlobDirectory)
-                //    return Enumerable.Empty<string>();
-                Trace.Write("Item=" + item.Uri.AbsolutePath);
-
                 string blobAddressUri = item.Uri.AbsolutePath.Substring(pathLength + 1);
                 CloudBlockBlob blockBlob2 = container.GetBlockBlobReference(blobAddressUri);
                 StreamReader sr = new StreamReader(blockBlob2.OpenRead());
