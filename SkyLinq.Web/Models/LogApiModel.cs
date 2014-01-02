@@ -10,6 +10,7 @@ using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Auth;
 using Microsoft.WindowsAzure.Storage.Blob;
 using System.Configuration;
+using System.Diagnostics;
 
 namespace SkyLinq.Web.Models
 {
@@ -33,28 +34,32 @@ namespace SkyLinq.Web.Models
         {
             // Retrieve storage account from connection string.
             var connStr = ConfigurationManager.ConnectionStrings["StorageConnectionString"];
-            if (connStr == null)
+            if (connStr == null || string.IsNullOrEmpty(connStr.ConnectionString))
                 throw new Exception("StorageConnectionString not configured.");
+
+            Trace.Write("StorageConnectionString=" + connStr.ConnectionString);
 
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse(
                 connStr.ConnectionString);
 
-            Uri containUri = storageAccount.BlobStorageUri.PrimaryUri;
+            Uri storageUri = storageAccount.BlobStorageUri.PrimaryUri;
+            Trace.Write("storageUri=" + storageUri.AbsoluteUri);
 
             // Create the blob client.
             CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
 
             // Retrieve a reference to a container. 
-            CloudBlobContainer container = blobClient.GetContainerReference(containUri.AbsoluteUri);
+            CloudBlobContainer container = blobClient.GetContainerReference(storageUri.AbsoluteUri);
             int pathLength = container.Uri.AbsolutePath.Length;
 
             _lines = container.ListBlobs(null, true)
                 .OfType<CloudBlockBlob>()
-                .AsParallel()
+                //.AsParallel()
                 .SelectMany(item =>
             {
                 //if (item is CloudBlobDirectory)
                 //    return Enumerable.Empty<string>();
+                Trace.Write("Item=" + item.Uri.AbsolutePath);
 
                 string blobAddressUri = item.Uri.AbsolutePath.Substring(pathLength + 1);
                 CloudBlockBlob blockBlob2 = container.GetBlockBlobReference(blobAddressUri);
