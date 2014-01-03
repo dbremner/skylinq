@@ -7,7 +7,7 @@ using SkyLinq.Web.Models;
 
 namespace SkyLinq.Web.Controllers
 {
-    public class LogRptController : Controller
+    public class SkyLogController : Controller
     {
         //
         // GET: /LogRpt/

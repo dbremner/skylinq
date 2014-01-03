@@ -87,8 +87,8 @@ namespace SkyLinq.Linq
         private static IEnumerable<Dictionary<string, object>> GetCounts(IEnumerable<string> strings)
         {
             return strings
-                //.Where(us => us.EndsWith(".aspx") || us.EndsWith(".asp"))
-                .GroupBy(us => us, (us, uss) => new KeyValuePair<string, int>(us, uss.Count()))
+                .GroupBy(us => us, 0, (a, us) => ++a)
+                //.GroupBy(us => us, (us, uss) => new KeyValuePair<string, int>(us, uss.Count()))
                 .OrderBy(kv => kv.Key)
                 .Select(kv => new Dictionary<string, object>() { { "Url", kv.Key }, { "Hits", kv.Value } });
         }
@@ -96,8 +96,8 @@ namespace SkyLinq.Linq
         private static IEnumerable<Dictionary<string, object>> GetTopCounts(IEnumerable<string> strings)
         {
             return strings
-                //.Where(us => us.EndsWith(".aspx") || us.EndsWith(".asp"))
-                .GroupBy(us => us, (us, uss) => new KeyValuePair<string, int>(us, uss.Count()))
+                .GroupBy(us => us, 0, (a, us) => ++a)
+                //.GroupBy(us => us, (us, uss) => new KeyValuePair<string, int>(us, uss.Count()))
                 .OrderByDescending(kv => kv.Value)
                 .Select(kv => new Dictionary<string, object>() { { "Url", kv.Key }, { "Hits", kv.Value } })
                 .Take(25);
