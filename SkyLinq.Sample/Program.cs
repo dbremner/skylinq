@@ -15,7 +15,9 @@ namespace SkyLinq.Sample
 
             //new LinqToW3SVCLogSample().Run();
 
-            new HttpClientSample().Run();
+            //new HttpClientSample().Run();
+
+            new DuckTypeSample().Run();
 
             Console.Read();
         }
