@@ -19,55 +19,43 @@ namespace SkyLinq.Composition
 
         static DuckTypeProxyFactory()
         {
-            _assemblyBuilder = AppDomain.CurrentDomain.DefineDynamicAssembly(
-                new AssemblyName(_assemblyName),
-#if DEBUG
-                    AssemblyBuilderAccess.RunAndSave
-#else
-                    AssemblyBuilderAccess.Run
-#endif
-            );
-
-#if DEBUG
-            _moduleBuilder = _assemblyBuilder.DefineDynamicModule(_assemblyName,
-                _assemblyName + ".dll", true);
-#else
-            ModuleBuilder moduleBuilder = assemblyBuilder.DefineDynamicModule(_assemblyName);
-#endif
+            _assemblyBuilder = CodeGenUtil.CreateAssemblyBuilder(_assemblyName);
+            _moduleBuilder = CodeGenUtil.CreateModuleBuilder(_assemblyBuilder, _assemblyName);
         }
 
-        public TProxy GenerateProxy<TProxy>(Type proxyInterfaceType, object obj) where TProxy : class
+        public TIMyDuck GenerateProxy<TIMyDuck>(Type typeOfIMyDuck, object otherDuck) where TIMyDuck : class
         {
-            ValidateParams(proxyInterfaceType, obj);
+            ValidateParams(typeOfIMyDuck, otherDuck);
 
             //If obj already implements TProxy, simply return it
-            TProxy o = obj as TProxy;
+            TIMyDuck o = otherDuck as TIMyDuck;
 
             if (o != null) return o;
 
             Type proxyType = null;
+            Type typeOfOtherDuck = otherDuck.GetType();
             _cacheLock.EnterUpgradeableReadLock();
             try
-            { 
-                if (!_typeCache.TryGetValue(new Tuple<Type,Type>(proxyInterfaceType, obj.GetType()), out proxyType))
+            {
+                if (!_typeCache.TryGetValue(new Tuple<Type, Type>(typeOfIMyDuck, typeOfOtherDuck), out proxyType))
                 {
                     //Generate the proxyType here
-                    if (!CanBeDuckTypedTo(proxyInterfaceType, obj))
+                    if (!CanBeDuckTypedTo(typeOfIMyDuck, otherDuck))
                         throw new ArgumentException("Object cannot be duck typed by the interface.");
 
-                    proxyType = GenerateProxyType(proxyInterfaceType, obj.GetType());
+                    proxyType = GenerateProxyType(typeOfIMyDuck, otherDuck.GetType());
 
                     _cacheLock.EnterWriteLock();
                     try
-                    { 
-                        _typeCache.Add(new Tuple<Type, Type>(proxyInterfaceType, obj.GetType()), proxyType);
+                    {
+                        _typeCache.Add(new Tuple<Type, Type>(typeOfIMyDuck, typeOfOtherDuck), proxyType);
                     }
                     finally
                     { 
                         _cacheLock.ExitWriteLock();
                     }
                 }
-                return (TProxy)Activator.CreateInstance(proxyType, obj);
+                return (TIMyDuck)Activator.CreateInstance(proxyType, otherDuck);
             }
             finally
             {
@@ -75,20 +63,20 @@ namespace SkyLinq.Composition
             }
         }
 
-        private static void ValidateParams(Type proxyInterfaceType, object obj)
+        private static void ValidateParams(Type typeOfIMyDuck, object otherDuck)
         {
-            if (!proxyInterfaceType.IsInterface)
+            if (!typeOfIMyDuck.IsInterface)
                 throw new ArgumentException("proxyInterfaceType must be a type of an interface.");
 
-            if (obj == null)
+            if (otherDuck == null)
                 throw new ArgumentNullException("Object to be wrapped cannot be null");
         }
 
-        public bool CanBeDuckTypedTo(Type proxyInterfaceType, object obj)
+        public bool CanBeDuckTypedTo(Type typeOfIMyDuck, object otherDuck)
         {
-            ValidateParams(proxyInterfaceType, obj);
-            Type t = obj.GetType();
-            return proxyInterfaceType.GetMembers().All(m =>
+            ValidateParams(typeOfIMyDuck, otherDuck);
+            Type t = otherDuck.GetType();
+            return typeOfIMyDuck.GetMembers().All(m =>
                 {
                     //Interface member can be either method or property
                     if (m.MemberType == MemberTypes.Method)
@@ -107,21 +95,21 @@ namespace SkyLinq.Composition
             );
         }
 
-        public Type GenerateProxyType(Type proxyInterfaceType, Type typeToIntercept)
+        public Type GenerateProxyType(Type typeOfIMyDuck, Type typeOfOtherDuck)
         {
             TypeAttributes newAttributes = TypeAttributes.Public | TypeAttributes.Class;
-            TypeBuilder typeBuilder = _moduleBuilder.DefineType(typeToIntercept.Name + "_DuckTypingProxy" + new Guid().ToString(), newAttributes);
+            TypeBuilder typeBuilder = _moduleBuilder.DefineType(typeOfOtherDuck.Name + "_DuckTypingProxy" + new Guid().ToString(), newAttributes);
             // Add interface implementation
-            typeBuilder.AddInterfaceImplementation(proxyInterfaceType);
+            typeBuilder.AddInterfaceImplementation(typeOfIMyDuck);
 
-            FieldBuilder targetField = typeBuilder.DefineField("target", typeToIntercept, FieldAttributes.Private);
+            FieldBuilder targetField = typeBuilder.DefineField("target", typeOfOtherDuck, FieldAttributes.Private);
 
-            foreach(MethodInfo mi in proxyInterfaceType.GetMethods())
+            foreach(MethodInfo mi in typeOfIMyDuck.GetMethods())
             {
-                CreateDelegateImplementation(typeBuilder, targetField, mi);
+                CodeGenUtil.CreateDelegateImplementation(typeBuilder, targetField, mi);
             }
 
-            foreach(PropertyInfo pi in proxyInterfaceType.GetProperties())
+            foreach(PropertyInfo pi in typeOfIMyDuck.GetProperties())
             {
                 PropertyBuilder pb = typeBuilder.DefineProperty(
                     pi.Name,
@@ -131,15 +119,15 @@ namespace SkyLinq.Composition
                 );
                 MethodInfo getMi = pi.GetGetMethod();
                 if (getMi != null)
-                { 
-                    MethodBuilder getMethod = CreateDelegateImplementation(typeBuilder, targetField, getMi);
+                {
+                    MethodBuilder getMethod = CodeGenUtil.CreateDelegateImplementation(typeBuilder, targetField, getMi);
                     pb.SetGetMethod(getMethod);
                 }
 
                 MethodInfo setMi = pi.GetSetMethod();
                 if (setMi != null)
-                { 
-                    MethodBuilder setMethod = CreateDelegateImplementation(typeBuilder, targetField, setMi);
+                {
+                    MethodBuilder setMethod = CodeGenUtil.CreateDelegateImplementation(typeBuilder, targetField, setMi);
                     pb.SetSetMethod(setMethod);
                 }
             }
@@ -148,7 +136,7 @@ namespace SkyLinq.Composition
             ConstructorBuilder ctorBuilder = typeBuilder.DefineConstructor(
                 MethodAttributes.Public | MethodAttributes.HideBySig | MethodAttributes.SpecialName | MethodAttributes.RTSpecialName,
                 CallingConventions.HasThis,
-                new Type[] { typeToIntercept });
+                new Type[] { typeOfOtherDuck });
             ctorBuilder.DefineParameter(1, ParameterAttributes.None, "target");
             ILGenerator il = ctorBuilder.GetILGenerator();
 
@@ -168,51 +156,5 @@ namespace SkyLinq.Composition
 #endif
             return result;
         }
-
-        private MethodBuilder CreateDelegateImplementation(TypeBuilder typeBuilder, FieldBuilder targetField, MethodInfo mi)
-        {
-            MethodBuilder methodBuilder = typeBuilder.DefineMethod(mi.Name,
-                MethodAttributes.Public | MethodAttributes.Virtual,
-                mi.ReturnType,
-                mi.GetParameters().Select(param => param.ParameterType).ToArray());
-
-            ILGenerator il = methodBuilder.GetILGenerator();
-
-            #region forwarding implementation
-
-            LocalBuilder baseReturn = null;
-
-            if (mi.ReturnType != typeof(void))
-            {
-                baseReturn = il.DeclareLocal(mi.ReturnType);
-            }
-
-            // Call the target method
-            il.Emit(OpCodes.Ldarg_0);
-            il.Emit(OpCodes.Ldfld, targetField);
-
-            // Load the call parameters
-            for(int i = 0; i < mi.GetParameters().Length; i++)
-            {
-                CodeGenUtil.EmitLoadArgument(il, i);
-            }
-
-            // Make the call
-            MethodInfo callTarget = targetField.FieldType.GetMethod(mi.Name, mi.GetParameters().Select(pi => pi.ParameterType).ToArray());
-            il.Emit(OpCodes.Callvirt, callTarget);
-
-            if (mi.ReturnType != typeof(void))
-            {
-                il.Emit(OpCodes.Stloc_0);
-                il.Emit(OpCodes.Ldloc_0);
-            }
-
-            il.Emit(OpCodes.Ret);
-
-            #endregion
-
-            return methodBuilder;
-        }
-
     }
 }
