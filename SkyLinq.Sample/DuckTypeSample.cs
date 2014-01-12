@@ -48,7 +48,7 @@ namespace SkyLinq.Sample
         public void Run()
         {
             Duck duck = new Duck();
-            DuckTypeProxyFactory factory = new DuckTypeProxyFactory();
+            DuckTypingProxyFactory factory = new DuckTypingProxyFactory();
             IDuckExpected proxy = factory.GenerateProxy<IDuckExpected>(typeof(IDuckExpected), duck);
             //IDuckExpected proxy = new DuckProxyExample(duck);
             //Calling proxy

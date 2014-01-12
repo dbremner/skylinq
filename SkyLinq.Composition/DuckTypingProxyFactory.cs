@@ -9,7 +9,7 @@ using System.Threading;
 
 namespace SkyLinq.Composition
 {
-    public class DuckTypeProxyFactory
+    public class DuckTypingProxyFactory
     {
         private static readonly IDictionary<Tuple<Type, Type>, Type> _typeCache = new Dictionary<Tuple<Type, Type>, Type>();
         private static readonly string _assemblyName = "SkyLinq.DuckTypingProxies.Generated";
@@ -17,7 +17,7 @@ namespace SkyLinq.Composition
         private static readonly ModuleBuilder _moduleBuilder;
         private static readonly ReaderWriterLockSlim _cacheLock = new ReaderWriterLockSlim();
 
-        static DuckTypeProxyFactory()
+        static DuckTypingProxyFactory()
         {
             _assemblyBuilder = CodeGenUtil.CreateAssemblyBuilder(_assemblyName);
             _moduleBuilder = CodeGenUtil.CreateModuleBuilder(_assemblyBuilder, _assemblyName);
