@@ -51,7 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DuckTypeSample.cs" />
+    <Compile Include="DuckTypingSample.cs" />
     <Compile Include="HttpClientSample.cs" />
     <Compile Include="ISample.cs" />
     <Compile Include="LingToGraphSample.cs" />

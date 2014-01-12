@@ -7,8 +7,8 @@ using SkyLinq.Composition;
 
 namespace SkyLinq.Sample
 {
-    //Note that the Duck class does not implement any interface
-    public class Duck
+    //Note that the Other Duck class does not implement any interface
+    public class OtherDuck
     {
         private string _name;
 
@@ -35,7 +35,7 @@ namespace SkyLinq.Sample
     }
 
     //That is how the caller expect from a duck
-    public interface IDuckExpected
+    public interface IMyDuck
     {
         string Name { get; set; }
 
@@ -43,14 +43,15 @@ namespace SkyLinq.Sample
         double Walk();
     }
 
-    public class DuckTypeSample : ISample
+    public class DuckTypingSample : ISample
     {
         public void Run()
         {
-            Duck duck = new Duck();
+            OtherDuck duck = new OtherDuck();
             DuckTypingProxyFactory factory = new DuckTypingProxyFactory();
-            IDuckExpected proxy = factory.GenerateProxy<IDuckExpected>(typeof(IDuckExpected), duck);
-            //IDuckExpected proxy = new DuckProxyExample(duck);
+            IMyDuck proxy = factory.GenerateProxy<IMyDuck>(typeof(IMyDuck), duck);
+            //IMyDuck proxy = new DuckProxyExample(duck);
+
             //Calling proxy
             proxy.Name = "Oregon";
             Console.WriteLine(string.Format("Duck name is {0}.", proxy.Name));
@@ -60,11 +61,11 @@ namespace SkyLinq.Sample
         }
     }
 
-    //Should generate code like this one
-    public class DuckProxyExample : IDuckExpected
+    //The DuckTypingProxyFactory should generate a class exactly like the following
+    public class DuckProxyExample : IMyDuck
     {
-        Duck target;
-        public DuckProxyExample(Duck duck)
+        OtherDuck target;
+        public DuckProxyExample(OtherDuck duck)
         {
             target = duck;
         }
