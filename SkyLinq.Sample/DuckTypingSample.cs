@@ -49,7 +49,7 @@ namespace SkyLinq.Sample
         {
             OtherDuck duck = new OtherDuck();
             DuckTypingProxyFactory factory = new DuckTypingProxyFactory();
-            IMyDuck proxy = factory.GenerateProxy<IMyDuck>(typeof(IMyDuck), duck);
+            IMyDuck proxy = factory.GenerateProxy<IMyDuck>(duck);
             //IMyDuck proxy = new DuckProxyExample(duck);
 
             //Calling proxy

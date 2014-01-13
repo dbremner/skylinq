@@ -23,8 +23,9 @@ namespace SkyLinq.Composition
             _moduleBuilder = CodeGenUtil.CreateModuleBuilder(_assemblyBuilder, _assemblyName);
         }
 
-        public TIMyDuck GenerateProxy<TIMyDuck>(Type typeOfIMyDuck, object otherDuck) where TIMyDuck : class
+        public TIMyDuck GenerateProxy<TIMyDuck>(object otherDuck) where TIMyDuck : class
         {
+            Type typeOfIMyDuck = typeof(TIMyDuck);
             ValidateParams(typeOfIMyDuck, otherDuck);
 
             //If obj already implements TProxy, simply return it
@@ -40,7 +41,7 @@ namespace SkyLinq.Composition
                 if (!_typeCache.TryGetValue(new Tuple<Type, Type>(typeOfIMyDuck, typeOfOtherDuck), out proxyType))
                 {
                     //Generate the proxyType here
-                    if (!CanBeDuckTypedTo(typeOfIMyDuck, otherDuck))
+                    if (!CanBeDuckTypedTo<TIMyDuck>(otherDuck))
                         throw new ArgumentException("Object cannot be duck typed by the interface.");
 
                     proxyType = GenerateProxyType(typeOfIMyDuck, otherDuck.GetType());
@@ -63,17 +64,9 @@ namespace SkyLinq.Composition
             }
         }
 
-        private static void ValidateParams(Type typeOfIMyDuck, object otherDuck)
+        public bool CanBeDuckTypedTo<TIMyDuck>(object otherDuck)
         {
-            if (!typeOfIMyDuck.IsInterface)
-                throw new ArgumentException("proxyInterfaceType must be a type of an interface.");
-
-            if (otherDuck == null)
-                throw new ArgumentNullException("Object to be wrapped cannot be null");
-        }
-
-        public bool CanBeDuckTypedTo(Type typeOfIMyDuck, object otherDuck)
-        {
+            Type typeOfIMyDuck = typeof(TIMyDuck);
             ValidateParams(typeOfIMyDuck, otherDuck);
             Type t = otherDuck.GetType();
             return typeOfIMyDuck.GetMembers().All(m =>
@@ -155,6 +148,15 @@ namespace SkyLinq.Composition
             _assemblyBuilder.Save(_assemblyName + ".dll");
 #endif
             return result;
+        }
+
+        private static void ValidateParams(Type typeOfIMyDuck, object otherDuck)
+        {
+            if (!typeOfIMyDuck.IsInterface)
+                throw new ArgumentException("proxyInterfaceType must be a type of an interface.");
+
+            if (otherDuck == null)
+                throw new ArgumentNullException("Object to be wrapped cannot be null");
         }
     }
 }
