@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DuckTypingSample.cs" />
+    <Compile Include="HeapSort.cs" />
     <Compile Include="HttpClientSample.cs" />
     <Compile Include="ISample.cs" />
     <Compile Include="LingToGraphSample.cs" />

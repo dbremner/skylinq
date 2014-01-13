@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using SkyLinq.Linq.Algoritms;
 
 namespace SkyLinq.Linq
 {
@@ -39,6 +40,62 @@ namespace SkyLinq.Linq
                 dict[key] = func(value, src);
             }
             return dict;
+        }
+
+        public static IEnumerable<T> Top<T>(this IEnumerable<T> source, int n)
+        {
+            return source.Top(n, Comparer<T>.Default);
+        }
+
+        public static IEnumerable<T> Top<T>(this IEnumerable<T> source, int n, IComparer<T> comparer)
+        {
+            return source.TakeOrdered(n, comparer, false);
+        }
+
+        public static IEnumerable<T> Bottom<T>(this IEnumerable<T> source, int n)
+        {
+            return source.Bottom(n, Comparer<T>.Default);
+        }
+
+        public static IEnumerable<T> Bottom<T>(this IEnumerable<T> source, int n, IComparer<T> comparer)
+        {
+            return source.TakeOrdered(n, comparer, true);
+        }
+
+        private static IEnumerable<T> TakeOrdered<T>(this IEnumerable<T> source, int n, IComparer<T> comparer, bool ascending)
+        {
+            Func<bool, bool> predicate;
+            HeapProperty heapProperty;
+
+            if (ascending)
+            {
+                heapProperty = HeapProperty.MinHeap;
+                predicate = (b) => !b;
+            }
+            else
+            {
+                heapProperty = HeapProperty.MinHeap;
+                predicate = (b) => b;
+            }
+
+            BinaryHeap<T> heap = new BinaryHeap<T>(n, heapProperty);
+            foreach (T item in source)
+            {
+                if (heap.Size < heap.Capacity)
+                    heap.Insert(item);
+                else
+                {
+                    if (predicate(comparer.Compare(heap.Peak(), item) < 0))
+                    {
+                        heap.Delete();
+                        heap.Insert(item);
+                    }
+                }
+            }
+            T[] a = heap.Array;
+            BinaryHeap<T>.SortHeapified(a, heap.Capacity, comparer, predicate);
+            for (int i = 0; i < heap.Capacity; i++)
+                yield return a[i];
         }
     }
 }

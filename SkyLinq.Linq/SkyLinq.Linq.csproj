@@ -36,6 +36,7 @@
     <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Algorithms\BinaryHeap.cs" />
     <Compile Include="BuildInW3SVCLogReports.cs" />
     <Compile Include="LinqExt.cs" />
     <Compile Include="LinqToDelimited.cs" />
