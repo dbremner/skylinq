@@ -11,6 +11,7 @@ namespace SkyLinq.Composition
 {
     public class DuckTypingProxyFactory
     {
+        #region static members
         private static readonly IDictionary<Tuple<Type, Type>, Type> _typeCache = new Dictionary<Tuple<Type, Type>, Type>();
         private static readonly string _assemblyName = "SkyLinq.DuckTypingProxies.Generated";
         private static readonly AssemblyBuilder _assemblyBuilder;
@@ -22,6 +23,16 @@ namespace SkyLinq.Composition
             _assemblyBuilder = CodeGenUtil.CreateAssemblyBuilder(_assemblyName);
             _moduleBuilder = CodeGenUtil.CreateModuleBuilder(_assemblyBuilder, _assemblyName);
         }
+
+        private static void ValidateParams(Type typeOfIMyDuck, object otherDuck)
+        {
+            if (!typeOfIMyDuck.IsInterface)
+                throw new ArgumentException("proxyInterfaceType must be a type of an interface.");
+
+            if (otherDuck == null)
+                throw new ArgumentNullException("Object to be wrapped cannot be null");
+        }
+        #endregion
 
         public TIMyDuck GenerateProxy<TIMyDuck>(object otherDuck) where TIMyDuck : class
         {
@@ -148,15 +159,6 @@ namespace SkyLinq.Composition
             _assemblyBuilder.Save(_assemblyName + ".dll");
 #endif
             return result;
-        }
-
-        private static void ValidateParams(Type typeOfIMyDuck, object otherDuck)
-        {
-            if (!typeOfIMyDuck.IsInterface)
-                throw new ArgumentException("proxyInterfaceType must be a type of an interface.");
-
-            if (otherDuck == null)
-                throw new ArgumentNullException("Object to be wrapped cannot be null");
         }
     }
 }
