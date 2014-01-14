@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using SkyLinq.Linq.Algoritms;
+using System.Diagnostics;
 
 namespace SkyLinq.Linq
 {
@@ -42,34 +43,61 @@ namespace SkyLinq.Linq
             return dict;
         }
 
-        public static IEnumerable<T> Top<T>(this IEnumerable<T> source, int n)
+        public static IEnumerable<TSource> Top<TSource>(this IEnumerable<TSource> source,
+            int n)
         {
-            return source.Top(n, Comparer<T>.Default);
+            return source.Top(n, item => item);
         }
 
-        public static IEnumerable<T> Top<T>(this IEnumerable<T> source, int n, IComparer<T> comparer)
+        public static IEnumerable<TSource> Top<TSource, TKey>(this IEnumerable<TSource> source,
+            int n,
+            Func<TSource, TKey> keySelector)
         {
-            return source.TakeOrdered(n, comparer, false);
+            return source.Top(n, keySelector, Comparer<TKey>.Default);
         }
 
-        public static IEnumerable<T> Bottom<T>(this IEnumerable<T> source, int n)
+        public static IEnumerable<TSource> Top<TSource, TKey>(this IEnumerable<TSource> source, 
+            int n, 
+            Func<TSource, TKey> keySelector,
+            IComparer<TKey> comparer)
         {
-            return source.Bottom(n, Comparer<T>.Default);
+            return source.TakeOrdered(n, keySelector, comparer, false);
         }
 
-        public static IEnumerable<T> Bottom<T>(this IEnumerable<T> source, int n, IComparer<T> comparer)
+
+        public static IEnumerable<TSource> Bottom<TSource>(this IEnumerable<TSource> source, 
+            int n)
         {
-            return source.TakeOrdered(n, comparer, true);
+            return source.Bottom(n, item => item);
         }
 
-        private static IEnumerable<T> TakeOrdered<T>(this IEnumerable<T> source, int n, IComparer<T> comparer, bool ascending)
+        public static IEnumerable<TSource> Bottom<TSource, TKey>(this IEnumerable<TSource> source, 
+            int n,
+            Func<TSource, TKey> keySelector)
+        {
+            return source.Bottom(n, keySelector, Comparer<TKey>.Default);
+        }
+
+        public static IEnumerable<TSource> Bottom<TSource, TKey>(this IEnumerable<TSource> source, 
+            int n,
+            Func<TSource, TKey> keySelector,
+            IComparer<TKey> comparer)
+        {
+            return source.TakeOrdered(n, keySelector, comparer, true);
+        }
+
+        private static IEnumerable<TSource> TakeOrdered<TSource, TKey>(this IEnumerable<TSource> source, 
+            int n,
+            Func<TSource, TKey> keySelector,
+            IComparer<TKey> comparer, 
+            bool ascending)
         {
             Func<bool, bool> predicate;
             HeapProperty heapProperty;
 
             if (ascending)
             {
-                heapProperty = HeapProperty.MinHeap;
+                heapProperty = HeapProperty.MaxHeap;
                 predicate = (b) => !b;
             }
             else
@@ -78,22 +106,23 @@ namespace SkyLinq.Linq
                 predicate = (b) => b;
             }
 
-            BinaryHeap<T> heap = new BinaryHeap<T>(n, heapProperty);
-            foreach (T item in source)
+            BinaryHeap<TSource, TKey> heap = new BinaryHeap<TSource, TKey>(n, heapProperty, keySelector);
+            foreach (TSource item in source)
             {
                 if (heap.Size < heap.Capacity)
                     heap.Insert(item);
                 else
                 {
-                    if (predicate(comparer.Compare(heap.Peak(), item) < 0))
+                    if (predicate(comparer.Compare(keySelector(heap.Peak()), keySelector(item)) < 0))
                     {
                         heap.Delete();
                         heap.Insert(item);
                     }
                 }
             }
-            T[] a = heap.Array;
-            BinaryHeap<T>.SortHeapified(a, heap.Capacity, comparer, predicate);
+            TSource[] a = heap.Array;
+            Debug.WriteLine(string.Join(", ", a));
+            BinaryHeap<TSource, TKey>.SortHeapified(a, heap.Capacity, keySelector, comparer, predicate);
             for (int i = 0; i < heap.Capacity; i++)
                 yield return a[i];
         }

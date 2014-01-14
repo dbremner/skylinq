@@ -98,9 +98,10 @@ namespace SkyLinq.Linq
             return strings
                 .GroupBy(us => us, 0, (a, us) => ++a)
                 //.GroupBy(us => us, (us, uss) => new KeyValuePair<string, int>(us, uss.Count()))
-                .OrderByDescending(kv => kv.Value)
-                .Select(kv => new Dictionary<string, object>() { { "Url", kv.Key }, { "Hits", kv.Value } })
-                .Take(25);
+                //.OrderByDescending(kv => kv.Value)
+                //.Take(25)
+                .Top(25, kv=> kv.Value)
+                .Select(kv => new Dictionary<string, object>() { { "Url", kv.Key }, { "Hits", kv.Value } });
         }
     }
 }

@@ -19,7 +19,7 @@ namespace SkyLinq.Sample
 
             new DuckTypingSample().Run();
 
-            //new HeapSort().Run();
+            new HeapSort().Run();
 
             Console.Read();
         }

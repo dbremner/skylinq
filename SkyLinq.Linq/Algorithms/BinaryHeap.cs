@@ -13,11 +13,12 @@ namespace SkyLinq.Linq.Algoritms
         MinHeap
     }
 
-    public class BinaryHeap<T>
+    public class BinaryHeap<TSource, TKey>
     {
-        private T[] _a;
+        private TSource[] _a;
         private int _size;
-        private IComparer<T> _comparer;
+        private Func<TSource, TKey> _keySelector;
+        private IComparer<TKey> _comparer;
         private Func<bool, bool> _heapPropertyPredicate;
 
         /// <summary>
@@ -25,8 +26,8 @@ namespace SkyLinq.Linq.Algoritms
         /// </summary>
         /// <param name="a">The array to heapify.</param>
         /// <param name="heapProperty">Indicate whether it is a max-heap or min-heap.</param>
-        public BinaryHeap(T[] a, HeapProperty heapProperty) 
-            : this(a, heapProperty, Comparer<T>.Default)
+        public BinaryHeap(TSource[] a, HeapProperty heapProperty, Func<TSource, TKey> keySelector)
+            : this(a, heapProperty, keySelector, Comparer<TKey>.Default)
         { }
 
         /// <summary>
@@ -35,14 +36,15 @@ namespace SkyLinq.Linq.Algoritms
         /// <param name="a">The array to heapify.</param>
         /// <param name="heapProperty">Indicate whether it is a max-heap or min-heap.</param>
         /// <param name="comparer">An ICompare</param>
-        public BinaryHeap(T[] a, HeapProperty heapProperty, IComparer<T> comparer)
+        public BinaryHeap(TSource[] a, HeapProperty heapProperty, Func<TSource, TKey> keySelector, IComparer<TKey> comparer)
         {
             _a = a;
             _size = a.Length;
+            _keySelector = keySelector;
             _comparer = comparer;
             SetHeapProperty(heapProperty);
 
-            Heapify(a, _size, _comparer, _heapPropertyPredicate);
+            Heapify(a, _size, keySelector, _comparer, _heapPropertyPredicate);
         }
 
         /// <summary>
@@ -50,8 +52,8 @@ namespace SkyLinq.Linq.Algoritms
         /// </summary>
         /// <param name="capacity">Capacity of the Heap</param>
         /// <param name="heapProperty">Indicates whether it is a max-heap or min-heap.</param>
-        public BinaryHeap(int capacity, HeapProperty heapProperty)
-            : this(capacity, heapProperty, Comparer<T>.Default)
+        public BinaryHeap(int capacity, HeapProperty heapProperty, Func<TSource, TKey> keySelector)
+            : this(capacity, heapProperty, keySelector, Comparer<TKey>.Default)
         { }
 
         /// <summary>
@@ -60,26 +62,27 @@ namespace SkyLinq.Linq.Algoritms
         /// <param name="capacity">Capacity of the Heap</param>
         /// <param name="heapProperty">Indicates whether it is a max-heap or min-heap.</param>
         /// <param name="comparer">An ICompare</param>
-        public BinaryHeap(int capacity, HeapProperty heapProperty, IComparer<T> comparer)
+        public BinaryHeap(int capacity, HeapProperty heapProperty, Func<TSource, TKey> keySelector, IComparer<TKey> comparer)
         {
-            _a = new T[capacity];
+            _a = new TSource[capacity];
             _size = 0;
+            _keySelector = keySelector;
             _comparer = comparer;
             SetHeapProperty(heapProperty);
         }
 
-        public void Insert(T newItem)
+        public void Insert(TSource newItem)
         {
             if (_size == _a.Length)
                 throw new InvalidOperationException("Heap is full.");
 
             _a[_size] = newItem;
             if (_size > 0)
-                SiftUp(_a, 0, _size, _comparer, _heapPropertyPredicate);
+                SiftUp(_a, 0, _size, _keySelector, _comparer, _heapPropertyPredicate);
             _size++;
         }
 
-        public T Peak()
+        public TSource Peak()
         {
             if (_size == 0)
                 throw new InvalidOperationException("Heap is empty.");
@@ -87,14 +90,14 @@ namespace SkyLinq.Linq.Algoritms
             return _a[0];
         }
 
-        public T Delete()
+        public TSource Delete()
         {
-            T ret = Peak();
+            TSource ret = Peak();
             _size--;
             if (_size > 1)
             { 
                 _a[0] = _a[_size];
-                SiftDown(_a, 0, _size - 1, _comparer, _heapPropertyPredicate);
+                SiftDown(_a, 0, _size - 1, _keySelector, _comparer, _heapPropertyPredicate);
             }
             return ret;
         }
@@ -109,7 +112,7 @@ namespace SkyLinq.Linq.Algoritms
             get { return _a.Length; }
         }
 
-        public T[] Array
+        public TSource[] Array
         {
             get { return _a; }
         }
@@ -124,12 +127,12 @@ namespace SkyLinq.Linq.Algoritms
 
         #region static methods
 
-        public static void Heapify(T[] a, int size, Func<bool, bool> predicate)
+        public static void Heapify(TSource[] a, int size, Func<TSource, TKey> keySelector, Func<bool, bool> predicate)
         {
-            Heapify(a, size, Comparer<T>.Default, predicate);
+            Heapify(a, size, keySelector, Comparer<TKey>.Default, predicate);
         }
 
-        public static void Heapify(T[] a, int size, IComparer<T> comparer, Func<bool, bool> predicate)
+        public static void Heapify(TSource[] a, int size, Func<TSource, TKey> keySelector, IComparer<TKey> comparer, Func<bool, bool> predicate)
         {
             //The siftUp version which is O(n log n) while the siftDown version is O(n)
             //for (int i = 1; i < _a.Length; i++)
@@ -141,7 +144,7 @@ namespace SkyLinq.Linq.Algoritms
 
             while (start >= 0)
             {
-                SiftDown(a, start, size - 1, comparer, predicate);
+                SiftDown(a, start, size - 1, keySelector, comparer, predicate);
                 start--;
                 Print(a);
             }
@@ -153,9 +156,12 @@ namespace SkyLinq.Linq.Algoritms
         /// <param name="a"></param>
         /// <param name="size"></param>
         /// <param name="predicate"></param>
-        public static void SortHeapified(T[] a, int size, Func<bool, bool> predicate)
+        public static void SortHeapified(TSource[] a, 
+            int size, 
+            Func<TSource, TKey> keySelector, 
+            Func<bool, bool> predicate)
         {
-            SortHeapified(a, size, Comparer<T>.Default, predicate);
+            SortHeapified(a, size, keySelector, Comparer<TKey>.Default, predicate);
         }
 
         /// <summary>
@@ -165,24 +171,28 @@ namespace SkyLinq.Linq.Algoritms
         /// <param name="size"></param>
         /// <param name="comparer"></param>
         /// <param name="predicate"></param>
-        public static void SortHeapified(T[] a, int size, IComparer<T> comparer, Func<bool, bool> predicate)
+        public static void SortHeapified(TSource[] a, 
+            int size, 
+            Func<TSource, TKey> keySelector, 
+            IComparer<TKey> comparer, 
+            Func<bool, bool> predicate)
         {
             int end = size - 1;
             while (end > 0)
             {
                 Swap(a, end, 0);
                 end--;
-                SiftDown(a, 0, end, comparer, predicate);
+                SiftDown(a, 0, end, keySelector, comparer, predicate);
             }
         }
 
-        public static void HeapSort(T[] a, int size, bool ascending)
+        public static void HeapSort(TSource[] a, int size, Func<TSource, TKey> keySelector, bool ascending)
         {
-            HeapSort(a, size, Comparer<T>.Default, ascending);
+            HeapSort(a, size, keySelector, Comparer<TKey>.Default, ascending);
         }
 
 
-        public static void HeapSort(T[] a, int size, IComparer<T> comparer, bool ascending)
+        public static void HeapSort(TSource[] a, int size, Func<TSource, TKey> keySelector, IComparer<TKey> comparer, bool ascending)
         {
             Func<bool, bool> predicate;
             
@@ -191,20 +201,20 @@ namespace SkyLinq.Linq.Algoritms
             else
                 predicate = (b) => b;
 
-            Heapify(a, size, comparer, predicate);
-            SortHeapified(a, size, comparer, predicate);
+            Heapify(a, size, keySelector, comparer, predicate);
+            SortHeapified(a, size, keySelector, comparer, predicate);
         }
 
         //Move up the element at i until it satifies the heap property
-        private static void SiftUp(T[]a, int start, int end, IComparer<T> comparer, Func<bool, bool> predicate)
+        private static void SiftUp(TSource[]a, int start, int end, Func<TSource, TKey> keySelector, IComparer<TKey> comparer, Func<bool, bool> predicate)
         {
             int child = end;
             while (child > start)
             {
                 int parent = (child - 1) / 2;
-                if (predicate(comparer.Compare(a[parent], a[start]) > 0))
+                if (predicate(comparer.Compare(keySelector(a[parent]), keySelector(a[child])) > 0))
                 {
-                    Swap(a, parent, start);
+                    Swap(a, parent, child);
                     child = parent;
                 }
                 else
@@ -212,7 +222,7 @@ namespace SkyLinq.Linq.Algoritms
             }
         }
 
-        private static void SiftDown(T[] a, int start, int end, IComparer<T> comparer, Func<bool, bool> predicate) 
+        private static void SiftDown(TSource[] a, int start, int end, Func<TSource, TKey> keySelector, IComparer<TKey> comparer, Func<bool, bool> predicate) 
         {
             int root = start;
             while (root * 2 + 1 <=end) //while the root has at least one child
@@ -220,9 +230,9 @@ namespace SkyLinq.Linq.Algoritms
                 int child = root * 2 + 1; //left child
                 int swap = root;
 
-                if (predicate(comparer.Compare(a[swap], a[child]) > 0))
+                if (predicate(comparer.Compare(keySelector(a[swap]), keySelector(a[child])) > 0))
                     swap = child;
-                if (child + 1 <= end && predicate(comparer.Compare(a[swap], a[child + 1]) > 0)) //right child
+                if (child + 1 <= end && predicate(comparer.Compare(keySelector(a[swap]), keySelector(a[child + 1])) > 0)) //right child
                     swap = child + 1;
                 if (swap != root)
                 {
@@ -234,14 +244,14 @@ namespace SkyLinq.Linq.Algoritms
             }
         }
 
-        private static void Swap(T[] a, int i, int j)
+        private static void Swap(TSource[] a, int i, int j)
         {
-            T swap = a[i];
+            TSource swap = a[i];
             a[i] = a[j];
             a[j] = swap;
         }
 
-        private static void Print(T[] a)
+        private static void Print(TSource[] a)
         {
             Debug.WriteLine(string.Join(",", a));
         }

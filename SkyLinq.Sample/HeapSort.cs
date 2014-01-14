@@ -14,9 +14,9 @@ namespace SkyLinq.Sample
         {
             int[] a = new int[] { 6, 5, 3, 1, 8, 7, 2, 4 };
             Print("Original", a);
-            BinaryHeap<int>.HeapSort(a, a.Length, true);
+            BinaryHeap<int, int>.HeapSort(a, a.Length, i => i, true);
             Print("Ascending", a);
-            BinaryHeap<int>.HeapSort(a, a.Length, false);
+            BinaryHeap<int, int>.HeapSort(a, a.Length, i => i, false);
             Print("Descending", a);
 
             IEnumerable<int> top3 = a.Top(3);
