@@ -24,7 +24,10 @@ namespace SkyLinq.Sample
 
             IEnumerable<int> bottom3 = a.Bottom(3);
             Print("Bottom 3", bottom3);
-            
+
+            IEnumerable<int> top10 = a.Top(10);
+            Print("Top 10", top10);
+
             Console.Read();
         }
 

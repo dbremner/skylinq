@@ -122,8 +122,8 @@ namespace SkyLinq.Linq
             }
             TSource[] a = heap.Array;
             Debug.WriteLine(string.Join(", ", a));
-            BinaryHeap<TSource, TKey>.SortHeapified(a, heap.Capacity, keySelector, comparer, predicate);
-            for (int i = 0; i < heap.Capacity; i++)
+            BinaryHeap<TSource, TKey>.SortHeapified(a, heap.Size, keySelector, comparer, predicate);
+            for (int i = 0; i < heap.Size; i++)
                 yield return a[i];
         }
     }
