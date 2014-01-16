@@ -72,7 +72,7 @@ namespace SkyLinq.Sample
         {
             var records = lines.AsW3SVCLogRecords();
 
-            var uriStems = records.Select(r => r.URIStem);
+            var uriStems = records.Select(r => r.cs_uri_stem);
             var uriStemsOrderByCount = uriStems
                 //.Where(us => us.EndsWith(".aspx") || us.EndsWith(".asp"))
                 .GroupBy(us => us, (us, uss) => new KeyValuePair<string, int>(us, uss.Count()))

@@ -28,111 +28,137 @@ namespace SkyLinq.Linq
         }
     }
 
-    public class W3SVCLogRecord : Record
+    public interface IW3SVCLogRecord
+    {
+        DateTime dateTime { get; }
+        string c_ip { get; }
+        string cs_bytes { get; }
+        string cs_Cookie { get; }
+        string cs_host { get; }
+        string cs_method { get; }
+        string cs_Referer { get; }
+        string cs_uri_query { get; }
+        string cs_uri_stem { get; }
+        string cs_User_Agent { get; }
+        string cs_username { get; }
+        string cs_version { get; }
+        string s_computername { get; }
+        string s_ip { get; }
+        string s_port { get; }
+        string s_sitename { get; }
+        string sc_bytes { get; }
+        string sc_status { get; }
+        string sc_substatus { get; }
+        string sc_win32_status { get; }
+        string time_taken { get; }
+    }
+
+
+    public class W3SVCLogRecord : Record, IW3SVCLogRecord
     {
         public W3SVCLogRecord(W3SVCLogColumnMapper mapper, string[] fields) : base(mapper, fields) { }
 
-        public DateTime DateTime
+        public DateTime dateTime
         {
             get { return DateTime.Parse(_fields[_mapper.GetColumnNo(0)] + ' ' + _fields[_mapper.GetColumnNo(1)]); }
         }
 
-        public string ServiceName
+        public string s_sitename
         {
             get { return _fields[_mapper.GetColumnNo(2)]; }
         }
 
-        public string ServerName
+        public string s_computername
         {
             get { return _fields[_mapper.GetColumnNo(3)]; }
         }
 
-        public string ServerIP
+        public string s_ip
         {
             get { return _fields[_mapper.GetColumnNo(4)]; }
         }
 
-        public string Method
+        public string cs_method
         {
             get { return _fields[_mapper.GetColumnNo(5)]; }
         }
 
-        public string URIStem
+        public string cs_uri_stem
         {
             get { return _fields[_mapper.GetColumnNo(6)]; }
         }
 
-        public string URIQuery
+        public string cs_uri_query
         {
             get { return _fields[_mapper.GetColumnNo(7)]; }
         }
 
-        public int ServerPort
+        public string s_port
         {
-            get { return Convert.ToInt32(_fields[_mapper.GetColumnNo(8)]); }
+            get { return _fields[_mapper.GetColumnNo(8)]; }
         }
 
-        public string UserName
+        public string cs_username
         {
             get { return _fields[_mapper.GetColumnNo(9)]; }
         }
 
-        public string ClientIP
+        public string c_ip
         {
             get { return _fields[_mapper.GetColumnNo(10)]; }
         }
 
-        public string UserAgent
+        public string cs_User_Agent
         {
             get { return _fields[_mapper.GetColumnNo(11)]; }
         }
 
-        public string Referer
+        public string cs_Referer
         {
             get { return _fields[_mapper.GetColumnNo(12)]; }
         }
 
-        public int Status
+        public string sc_status
         {
-            get { return Convert.ToInt32(_fields[_mapper.GetColumnNo(13)]); }
+            get { return _fields[_mapper.GetColumnNo(13)]; }
         }
 
-        public int SubStatus
+        public string sc_substatus
         {
-            get { return Convert.ToInt32(_fields[_mapper.GetColumnNo(14)]); }
+            get { return _fields[_mapper.GetColumnNo(14)]; }
         }
 
-        public int Win32Status
+        public string sc_win32_status
         {
-            get { return Convert.ToInt32(_fields[_mapper.GetColumnNo(15)]); }
+            get { return _fields[_mapper.GetColumnNo(15)]; }
         }
 
-        public int BytesSent
+        public string sc_bytes
         {
-            get { return Convert.ToInt32(_fields[_mapper.GetColumnNo(16)]); }
+            get { return _fields[_mapper.GetColumnNo(16)]; }
         }
 
-        public int BytesReceived
+        public string cs_bytes
         {
-            get { return Convert.ToInt32(_fields[_mapper.GetColumnNo(17)]); }
+            get { return _fields[_mapper.GetColumnNo(17)]; }
         }
 
-        public int TimeTaken
+        public string time_taken
         {
-            get { return Convert.ToInt32(_fields[_mapper.GetColumnNo(18)]); }
+            get { return _fields[_mapper.GetColumnNo(18)]; }
         }
 
-        public string ProtocolVersion
+        public string cs_version
         {
             get { return _fields[_mapper.GetColumnNo(19)]; }
         }
 
-        public string Host
+        public string cs_host
         {
             get { return _fields[_mapper.GetColumnNo(20)]; }
         }
 
-        public string Cookie
+        public string cs_Cookie
         {
             get { return _fields[_mapper.GetColumnNo(21)]; }
         }

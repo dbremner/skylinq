@@ -11,76 +11,76 @@ namespace SkyLinq.Linq
     public static class BuildInW3SVCLogReports
     {
         public static IEnumerable<IDictionary<string, object>> RunReport(this IEnumerable<string> records, 
-            Func<IEnumerable<W3SVCLogRecord>, IEnumerable<IDictionary<string, object>>> report)
+            Func<IEnumerable<IW3SVCLogRecord>, IEnumerable<IDictionary<string, object>>> report)
         {
             return records.AsW3SVCLogRecords().RunReport(report);
         }
 
-        public static IEnumerable<IDictionary<string, object>> RunReport(this IEnumerable<W3SVCLogRecord> records, 
-            Func<IEnumerable<W3SVCLogRecord>, IEnumerable<IDictionary<string, object>>> report)
+        public static IEnumerable<IDictionary<string, object>> RunReport(this IEnumerable<IW3SVCLogRecord> records, 
+            Func<IEnumerable<IW3SVCLogRecord>, IEnumerable<IDictionary<string, object>>> report)
         {
             return report(records);
         }
 
         [Display(Description = "Get Top 25 URLs")]
-        public static IEnumerable<IDictionary<string, object>> GetTopUrls(this IEnumerable<W3SVCLogRecord> records)
+        public static IEnumerable<IDictionary<string, object>> GetTopUrls(this IEnumerable<IW3SVCLogRecord> records)
         {
             var uriStems = records
-                .Select(r => r.URIStem);
+                .Select(r => r.cs_uri_stem);
             return GetTopCounts(uriStems);
         }
 
         [Display(Description = "Get Top User Agents")]
-        public static IEnumerable<IDictionary<string, object>> GetTopUserAgents(this IEnumerable<W3SVCLogRecord> records)
+        public static IEnumerable<IDictionary<string, object>> GetTopUserAgents(this IEnumerable<IW3SVCLogRecord> records)
         {
             var uriStems = records
-                .Select(r => r.UserAgent);
+                .Select(r => r.cs_User_Agent);
             return GetTopCounts(uriStems);
         }
 
         [Display(Description = "Get Top 25 ASP/ASP.NET Pages")]
-        public static IEnumerable<IDictionary<string, object>> GetTopPages(this IEnumerable<W3SVCLogRecord> records)
+        public static IEnumerable<IDictionary<string, object>> GetTopPages(this IEnumerable<IW3SVCLogRecord> records)
         {
             var uriStems = records
-                .Select(r => r.URIStem)
+                .Select(r => r.cs_uri_stem)
                 .Where(us => us.EndsWith(".aspx") || us.EndsWith(".asp") || us.IndexOf('.') < 0);
             return GetTopCounts(uriStems);
         }
 
         [Display(Description = "Get Top 25 File Types")]
-        public static IEnumerable<IDictionary<string, object>> GetTopFileTypes(this IEnumerable<W3SVCLogRecord> records)
+        public static IEnumerable<IDictionary<string, object>> GetTopFileTypes(this IEnumerable<IW3SVCLogRecord> records)
         {
-            var filetypes = records.Select(r => Path.GetExtension(r.URIStem));
+            var filetypes = records.Select(r => Path.GetExtension(r.cs_uri_stem));
             return GetTopCounts(filetypes);
         }
 
         [Display(Description = "Get Top 25 Client IPs")]
-        public static IEnumerable<IDictionary<string, object>> GetTopClientIPs(this IEnumerable<W3SVCLogRecord> records)
+        public static IEnumerable<IDictionary<string, object>> GetTopClientIPs(this IEnumerable<IW3SVCLogRecord> records)
         {
-            var clientIPs = records.Select(r => r.ClientIP);
+            var clientIPs = records.Select(r => r.c_ip);
             return GetTopCounts(clientIPs);
         }
 
         [Display(Description = "Get Hits By Hour")]
-        public static IEnumerable<IDictionary<string, object>> GetHitsByHour(this IEnumerable<W3SVCLogRecord> records)
+        public static IEnumerable<IDictionary<string, object>> GetHitsByHour(this IEnumerable<IW3SVCLogRecord> records)
         {
-            var hours = records.Select(r => ((r.DateTime.Hour + 18) % 24).ToString("00"));
+            var hours = records.Select(r => ((r.dateTime.Hour + 18) % 24).ToString("00"));
             return GetCounts(hours);
         }
 
         [Display(Description = "Get Hits By Methods")]
-        public static IEnumerable<IDictionary<string, object>> GetHitsByMethods(this IEnumerable<W3SVCLogRecord> records)
+        public static IEnumerable<IDictionary<string, object>> GetHitsByMethods(this IEnumerable<IW3SVCLogRecord> records)
         {
-            var methods = records.Select(r => r.Method);
+            var methods = records.Select(r => r.cs_method);
             return GetCounts(methods);
         }
 
         [Display(Description = "Get Top Errors")]
-        public static IEnumerable<IDictionary<string, object>> GetTopErrors(this IEnumerable<W3SVCLogRecord> records)
+        public static IEnumerable<IDictionary<string, object>> GetTopErrors(this IEnumerable<IW3SVCLogRecord> records)
         {
             var methods = records
-                .Where(r => r.Status >= 400)
-                .Select(r => r.Status + " " + r.URIStem);
+                .Where(r => int.Parse(r.sc_status) >= 400)
+                .Select(r => r.sc_status + " " + r.cs_uri_stem);
             return GetTopCounts(methods);
         }
 
