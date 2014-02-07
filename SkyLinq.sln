@@ -5,8 +5,6 @@ VisualStudioVersion = 12.0.30110.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkyLinq.Linq", "SkyLinq.Linq\SkyLinq.Linq.csproj", "{88C4084B-6643-45FE-9687-857999A230A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkyLinq.Example", "SkyLinq.Sample\SkyLinq.Example.csproj", "{C66486CB-F383-48E8-9A9D-E2EB237194F9}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{8FBAB3ED-8C18-4FFD-AFD2-A99EF67AFACC}"
 	ProjectSection(SolutionItems) = preProject
 		.nuget\NuGet.Config = .nuget\NuGet.Config
@@ -20,6 +18,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkyLinq.Web.Http", "SkyLinq
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkyLinq.Composition", "SkyLinq.Composition\SkyLinq.Composition.csproj", "{C034C431-43C5-44CC-BF65-B2D09BFBBE13}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkyLinq.Example", "SkyLinq.Example\SkyLinq.Example.csproj", "{C66486CB-F383-48E8-9A9D-E2EB237194F9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,10 +30,6 @@ Global
 		{88C4084B-6643-45FE-9687-857999A230A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{88C4084B-6643-45FE-9687-857999A230A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{88C4084B-6643-45FE-9687-857999A230A4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C66486CB-F383-48E8-9A9D-E2EB237194F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C66486CB-F383-48E8-9A9D-E2EB237194F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C66486CB-F383-48E8-9A9D-E2EB237194F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C66486CB-F383-48E8-9A9D-E2EB237194F9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{192AF149-733E-4378-9E27-699B0F065A8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{192AF149-733E-4378-9E27-699B0F065A8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{192AF149-733E-4378-9E27-699B0F065A8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -46,6 +42,10 @@ Global
 		{C034C431-43C5-44CC-BF65-B2D09BFBBE13}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C034C431-43C5-44CC-BF65-B2D09BFBBE13}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C034C431-43C5-44CC-BF65-B2D09BFBBE13}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C66486CB-F383-48E8-9A9D-E2EB237194F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C66486CB-F383-48E8-9A9D-E2EB237194F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C66486CB-F383-48E8-9A9D-E2EB237194F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C66486CB-F383-48E8-9A9D-E2EB237194F9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
