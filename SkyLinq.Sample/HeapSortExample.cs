@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using SkyLinq.Linq;
 using SkyLinq.Linq.Algoritms;
 
-namespace SkyLinq.Sample
+namespace SkyLinq.Example
 {
-    public class HeapSort : ISample
+    public class HeapSort : IExample
     {
         public void Run()
         {

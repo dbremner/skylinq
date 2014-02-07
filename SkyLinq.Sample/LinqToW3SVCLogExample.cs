@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using System.IO;
 using SkyLinq.Linq;
 
-namespace SkyLinq.Sample
+namespace SkyLinq.Example
 {
-    public class LinqToW3SVCLogSample : ISample
+    public class LinqToW3SVCLogExample : IExample
     {
         public void Run()
         {
@@ -35,7 +35,7 @@ namespace SkyLinq.Sample
                 .Select(kv => string.Format("{0} {1}", kv.Key, kv.Value))
                 .Take(20);
 
-            SampleUtil.Dump(uriStemsOrderByCount);
+            ExampleUtil.Dump(uriStemsOrderByCount);
         }
 
         private static void QueryW3SVCLogUsingLinqToDelimited(IEnumerable<string> lines)
@@ -65,7 +65,7 @@ namespace SkyLinq.Sample
                 .Select(kv => string.Format("{0} {1}", kv.Key, kv.Value))
                 .Take(20);
 
-            SampleUtil.Dump(uriStemsOrderByCount);
+            ExampleUtil.Dump(uriStemsOrderByCount);
         }   
 
         private static void QueryW3SVCLogUisngLingToW3SVCLog(IEnumerable<string> lines)
@@ -79,7 +79,7 @@ namespace SkyLinq.Sample
                 .OrderByDescending(kv => kv.Value)
                 .Select(kv => string.Format("{0} {1}", kv.Key, kv.Value))
                 .Take(20);
-            SampleUtil.Dump(uriStemsOrderByCount);
+            ExampleUtil.Dump(uriStemsOrderByCount);
         }
     }
 }

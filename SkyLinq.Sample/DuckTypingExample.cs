@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SkyLinq.Composition;
 
-namespace SkyLinq.Sample
+namespace SkyLinq.Example
 {
     //Note that the Other Duck class does not implement any interface
     public class OtherDuck
@@ -43,7 +43,7 @@ namespace SkyLinq.Sample
         double Walk();
     }
 
-    public class DuckTypingSample : ISample
+    public class DuckTypingExample : IExample
     {
         public void Run()
         {

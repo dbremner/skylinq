@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SkyLinq.Sample
+namespace SkyLinq.Example
 {
-    interface ISample
+    interface IExample
     {
         void Run();
     }

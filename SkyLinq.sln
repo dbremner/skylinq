@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.30110.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkyLinq.Linq", "SkyLinq.Linq\SkyLinq.Linq.csproj", "{88C4084B-6643-45FE-9687-857999A230A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkyLinq.Sample", "SkyLinq.Sample\SkyLinq.Sample.csproj", "{C66486CB-F383-48E8-9A9D-E2EB237194F9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkyLinq.Example", "SkyLinq.Sample\SkyLinq.Example.csproj", "{C66486CB-F383-48E8-9A9D-E2EB237194F9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{8FBAB3ED-8C18-4FFD-AFD2-A99EF67AFACC}"
 	ProjectSection(SolutionItems) = preProject

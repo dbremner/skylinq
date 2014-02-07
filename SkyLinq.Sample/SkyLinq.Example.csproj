@@ -7,8 +7,8 @@
     <ProjectGuid>{C66486CB-F383-48E8-9A9D-E2EB237194F9}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SkyLinq.Sample</RootNamespace>
-    <AssemblyName>LinqSample</AssemblyName>
+    <RootNamespace>SkyLinq.Example</RootNamespace>
+    <AssemblyName>SkyLinq.Example</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
@@ -51,15 +51,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DuckTypingSample.cs" />
-    <Compile Include="HeapSort.cs" />
-    <Compile Include="HttpClientSample.cs" />
-    <Compile Include="ISample.cs" />
-    <Compile Include="LingToGraphSample.cs" />
-    <Compile Include="LinqToW3SVCLogSample.cs" />
+    <Compile Include="DuckTypingExample.cs" />
+    <Compile Include="HeapSortExample.cs" />
+    <Compile Include="HttpClientExample.cs" />
+    <Compile Include="IExample.cs" />
+    <Compile Include="LingToGraphExample.cs" />
+    <Compile Include="LinqToW3SVCLogExample.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SampleUtil.cs" />
+    <Compile Include="ExampleUtil.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

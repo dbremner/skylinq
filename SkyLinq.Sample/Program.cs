@@ -5,19 +5,19 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
-namespace SkyLinq.Sample
+namespace SkyLinq.Example
 {
     class Program
     {
         static void Main(string[] args)
         {
-            //new LingToGraphSample().Run();
+            //new LingToGraphExample().Run();
 
-            //new LinqToW3SVCLogSample().Run();
+            //new LinqToW3SVCLogExample().Run();
 
-            //new HttpClientSample().Run();
+            //new HttpClientExample().Run();
 
-            new DuckTypingSample().Run();
+            new DuckTypingExample().Run();
 
             new HeapSort().Run();
 

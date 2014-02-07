@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 using System.IO;
 using SkyLinq.Linq;
 
-namespace SkyLinq.Sample
+namespace SkyLinq.Example
 {
-    public class LingToGraphSample : ISample
+    public class LingToGraphExample : IExample
     {
         public void Run()
         {
-            SampleUtil.Dump(DirS(@"../../.."));
+            ExampleUtil.Dump(DirS(@"../../.."));
         }
 
         private static IEnumerable<string> DirS(string path)

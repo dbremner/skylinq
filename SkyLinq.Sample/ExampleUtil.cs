@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SkyLinq.Sample
+namespace SkyLinq.Example
 {
-    public class SampleUtil
+    public class ExampleUtil
     {
         public static void Dump<T>(IEnumerable<T> seq)
         {

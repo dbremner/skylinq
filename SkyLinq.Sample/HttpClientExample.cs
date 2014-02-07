@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using System.Net.Http.Headers;
 
-namespace SkyLinq.Sample
+namespace SkyLinq.Example
 {
-    class HttpClientSample : ISample
+    class HttpClientExample : IExample
     {
         public void Run()
         {
