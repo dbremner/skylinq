@@ -19,7 +19,8 @@ namespace SkyLinq.Example
 
             //QueryW3SVCLogUsingLinqToText(lines);
             //QueryW3SVCLogUsingLinqToDelimited(lines);
-            QueryW3SVCLogUisngLingToW3SVCLog(lines);
+            //QueryW3SVCLogUisngLingToW3SVCLog(lines);
+            QueryW3SVCLogUisngSkyLinqQueryable(lines);
         }
 
         private static void QueryW3SVCLogUsingLinqToText(IEnumerable<string> lines)
@@ -79,6 +80,19 @@ namespace SkyLinq.Example
                 .OrderByDescending(kv => kv.Value)
                 .Select(kv => string.Format("{0} {1}", kv.Key, kv.Value))
                 .Take(20);
+            ExampleUtil.Dump(uriStemsOrderByCount);
+        }
+
+        private static void QueryW3SVCLogUisngSkyLinqQueryable(IEnumerable<string> lines)
+        {
+            var records = lines.AsW3SVCLogRecords().AsSkyLinqQueryable();
+
+            var uriStemsOrderByCount = records.Select(r => r.cs_uri_stem)
+                //.Where(us => us.EndsWith(".aspx") || us.EndsWith(".asp"))
+                .GroupBy(us => us, (us, uss) => new KeyValuePair<string, int>(us, uss.Count()))
+                .OrderByDescending(kv => kv.Value)
+                .Take(20)
+                .Select(kv => string.Format("{0} {1}", kv.Key, kv.Value));
             ExampleUtil.Dump(uriStemsOrderByCount);
         }
     }

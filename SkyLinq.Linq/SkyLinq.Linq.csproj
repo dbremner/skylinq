@@ -44,6 +44,8 @@
     <Compile Include="LinqToGraph.cs" />
     <Compile Include="LinqToW3SVCLog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SkyLinqQueryable.cs" />
+    <Compile Include="SkyLinqQueryProvider.cs" />
     <Compile Include="Util.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
