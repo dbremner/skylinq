@@ -13,13 +13,13 @@ namespace SkyLinq.Example
         {
             //new LingToGraphExample().Run();
 
-            //new LinqToW3SVCLogExample().Run();
+            new LinqToW3SVCLogExample().Run();
 
             //new HttpClientExample().Run();
 
-            new DuckTypingExample().Run();
+            //new DuckTypingExample().Run();
 
-            new HeapSort().Run();
+            //new HeapSort().Run();
 
             Console.Read();
         }

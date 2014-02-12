@@ -20,7 +20,7 @@ namespace SkyLinq.Linq
                 throw new ArgumentNullException("provider");
 
             IQueryable<TElement> queryable = elements.AsQueryable<TElement>();
-            _provider = new SkyLinqQueryProvider<TElement>(queryable);
+            _provider = new SkyLinqQueryProvider(queryable);
             _expression = Expression.Constant(this);
         }
 

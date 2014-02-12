@@ -1,41 +1,72 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Linq.Expressions;
+using System.Reflection;
 
 namespace SkyLinq.Linq
 {
-    internal class SkyLinqQueryProvider<TElement> : IQueryProvider
+    internal class SkyLinqQueryProvider : IQueryProvider
     {
-        private IQueryable<TElement> _baseQueryable;
+        private IEnumerable _enumerable;
 
-        internal SkyLinqQueryProvider(IQueryable<TElement> baseQueryable)
+        internal SkyLinqQueryProvider(IEnumerable enumerable)
         {
-            _baseQueryable = baseQueryable;
+            if (enumerable == null)
+            {
+                throw new ArgumentNullException("enumerable");
+            }
+
+            _enumerable = enumerable;
         }
 
         public IQueryable<TElement> CreateQuery<TElement>(Expression expression)
         {
+            if (expression == null)
+            {
+                throw new ArgumentNullException("expression");
+            }
+            Type type = TypeHelper.FindGenericType(typeof(IQueryable<>), expression.Type);
+            if (type == null)
+            {
+                throw new ArgumentException("expression");
+            }
+
             return new SkyLinqQueryable<TElement>(this, expression);
             //return _baseProvider.CreateQuery<TElement>(expression); //If I do this, I will lose the interception
         }
 
         public IQueryable CreateQuery(Expression expression)
         {
-            throw new NotImplementedException();
+            if (expression == null)
+            {
+                throw new ArgumentNullException("expression");
+            }
+            Type type = TypeHelper.FindGenericType(typeof(IQueryable<>), expression.Type);
+            if (type == null)
+            {
+                throw new ArgumentException("expression");
+            }
+            return Create(type.GetTypeInfo().GenericTypeArguments.First(), expression);
         }
 
         public TResult Execute<TResult>(Expression expression)
         {
             //Need to translate the expression here or I will get argument error
-            return _baseQueryable.Provider.Execute<TResult>(expression);
+            throw new NotImplementedException();
         }
 
         public object Execute(Expression expression)
         {
-            return _baseQueryable.Provider.Execute(expression);
+            throw new NotImplementedException();
+        }
+
+        private IQueryable Create(Type elementType, Expression expression)
+        {
+            return (IQueryable)Activator.CreateInstance(typeof(EnumerableQuery<>).MakeGenericType(new Type[] { elementType }), this, expression);
         }
     }
 }
