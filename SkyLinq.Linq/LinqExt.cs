@@ -86,11 +86,6 @@ namespace SkyLinq.Linq
             return source.TakeOrdered(n, keySelector, comparer, true);
         }
 
-        public static IQueryable<TSource> AsSkyLinqQueryable<TSource>(this IEnumerable<TSource> source)
-        {
-            return new SkyLinqQueryable<TSource>(source);
-        }
-
         private static IEnumerable<TSource> TakeOrdered<TSource, TKey>(this IEnumerable<TSource> source, 
             int n,
             Func<TSource, TKey> keySelector,

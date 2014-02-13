@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace SkyLinq.Linq
+namespace SkyLinq.Composition
 {
     internal class SkyLinqQueryProvider : IQueryProvider
     {
@@ -35,7 +35,7 @@ namespace SkyLinq.Linq
                 throw new ArgumentException("expression");
             }
 
-            return new SkyLinqQueryable<TElement>(this, expression);
+            return new SkyLinqQuery<TElement>(this, expression);
             //return _baseProvider.CreateQuery<TElement>(expression); //If I do this, I will lose the interception
         }
 
@@ -56,17 +56,19 @@ namespace SkyLinq.Linq
         public TResult Execute<TResult>(Expression expression)
         {
             //Need to translate the expression here or I will get argument error
-            throw new NotImplementedException();
+            Expression rewritten = new SkyLinqRewriter().Visit(expression);
+            Expression<Func<TResult>> lambda = Expression.Lambda<Func<TResult>>(rewritten, (IEnumerable<ParameterExpression>)null);
+            return lambda.Compile()();
         }
 
         public object Execute(Expression expression)
         {
-            throw new NotImplementedException();
+            return Execute<object>(expression);
         }
 
         private IQueryable Create(Type elementType, Expression expression)
         {
-            return (IQueryable)Activator.CreateInstance(typeof(EnumerableQuery<>).MakeGenericType(new Type[] { elementType }), this, expression);
+            return (IQueryable)Activator.CreateInstance(typeof(SkyLinqQuery<>).MakeGenericType(new Type[] { elementType }), this, expression);
         }
     }
 }
