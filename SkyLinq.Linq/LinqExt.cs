@@ -46,20 +46,22 @@ namespace SkyLinq.Linq
         public static IEnumerable<TSource> Top<TSource>(this IEnumerable<TSource> source,
             int n)
         {
-            return source.Top(n, item => item);
+            return source.Top(item => item, n);
         }
 
         public static IEnumerable<TSource> Top<TSource, TKey>(this IEnumerable<TSource> source,
-            int n,
-            Func<TSource, TKey> keySelector)
+            Func<TSource, TKey> keySelector,
+            int n
+        )
         {
-            return source.Top(n, keySelector, Comparer<TKey>.Default);
+            return source.Top(keySelector, Comparer<TKey>.Default, n);
         }
 
         public static IEnumerable<TSource> Top<TSource, TKey>(this IEnumerable<TSource> source, 
-            int n, 
             Func<TSource, TKey> keySelector,
-            IComparer<TKey> comparer)
+            IComparer<TKey> comparer,
+            int n 
+        )
         {
             return source.TakeOrdered(n, keySelector, comparer, false);
         }
@@ -68,20 +70,20 @@ namespace SkyLinq.Linq
         public static IEnumerable<TSource> Bottom<TSource>(this IEnumerable<TSource> source, 
             int n)
         {
-            return source.Bottom(n, item => item);
+            return source.Bottom(item => item, n);
         }
 
-        public static IEnumerable<TSource> Bottom<TSource, TKey>(this IEnumerable<TSource> source, 
-            int n,
-            Func<TSource, TKey> keySelector)
+        public static IEnumerable<TSource> Bottom<TSource, TKey>(this IEnumerable<TSource> source,
+            Func<TSource, TKey> keySelector, int n)
         {
-            return source.Bottom(n, keySelector, Comparer<TKey>.Default);
+            return source.Bottom(keySelector, Comparer<TKey>.Default, n);
         }
 
         public static IEnumerable<TSource> Bottom<TSource, TKey>(this IEnumerable<TSource> source, 
-            int n,
             Func<TSource, TKey> keySelector,
-            IComparer<TKey> comparer)
+            IComparer<TKey> comparer,
+            int n
+        )
         {
             return source.TakeOrdered(n, keySelector, comparer, true);
         }

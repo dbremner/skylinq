@@ -7,6 +7,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using SkyLinq.Linq;
 
 namespace SkyLinq.Composition
 {
@@ -225,7 +226,7 @@ namespace SkyLinq.Composition
             return genericArguments.MakeArrayType(arrayRank);
         }
 
-        internal override Expression VisitConstant(ConstantExpression c)
+        protected override Expression VisitConstant(ConstantExpression c)
         {
             SkyLinqQuery value = c.Value as SkyLinqQuery;
             if (value == null)
@@ -240,12 +241,37 @@ namespace SkyLinq.Composition
             return Expression.Constant(value.Enumerable, publicType);
         }
 
-        internal override Expression VisitLambda(LambdaExpression lambda)
+        protected ReadOnlyCollection<Expression> VisitExpressionList(ReadOnlyCollection<Expression> original)
         {
-            return lambda;
+            List<Expression> expressions = null;
+            int num = 0;
+            int count = original.Count;
+            while (num < count)
+            {
+                Expression expression = this.Visit(original[num]);
+                if (expressions != null)
+                {
+                    expressions.Add(expression);
+                }
+                else if (expression != original[num])
+                {
+                    expressions = new List<Expression>(count);
+                    for (int i = 0; i < num; i++)
+                    {
+                        expressions.Add(original[i]);
+                    }
+                    expressions.Add(expression);
+                }
+                num++;
+            }
+            if (expressions == null)
+            {
+                return original;
+            }
+            return expressions.ToReadOnlyCollection<Expression>();
         }
 
-        internal override Expression VisitMethodCall(MethodCallExpression m)
+        protected override Expression VisitMethodCall(MethodCallExpression m)
         {
             Type[] genericArguments;
             Expression expression = this.Visit(m.Object);
@@ -278,18 +304,37 @@ namespace SkyLinq.Composition
                 {
                     case "Take":
                     case "First":
-                        Expression fstExp = expressions[0];
-                        if (fstExp.NodeType == ExpressionType.Call)
+                        //If we have Order followed Take or First, we optimize it by calling the Top or Bottom functions
+                        Expression innerCall = expressions[0];
+                        Expression nexp = m.Method.Name == "Take" ? expressions[1] : Expression.Constant(1);
+                        if (innerCall.NodeType == ExpressionType.Call)
                         {
-                            MethodInfo innerMI = ((MethodCallExpression)fstExp).Method;
+                            MethodInfo innerMI = ((MethodCallExpression)innerCall).Method;
                             if (innerMI.DeclaringType == typeof(Enumerable) &&
                                 (innerMI.Name == "OrderBy" || innerMI.Name == "OrderByDescending"))
                             {
-                                //We might optimize here
-                                methodInfo = methodInfo;
+                                //Map the new method name
+                                string newMethodName = innerMI.Name == "OrderBy" ? "Bottom" : "Top";
+                                //Construct the new expressions
+                                expressions = new ReadOnlyCollection<Expression>(((MethodCallExpression)innerCall).Arguments.Concat(new Expression[] {nexp}).ToList());
+                                methodInfo = FindMethod(typeof(LinqExt), newMethodName,
+                                    expressions,
+                                    innerMI.GetGenericArguments(), 
+                                    BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
                             }
                         }
                         break;
+                    //case "GroupBy":
+                    //    int n = Array.FindIndex(methodInfo.GetParameters(), p => p.Name == "resultSelector");
+                    //    if (n > -1)
+                    //    {
+                    //        Expression resultSelector = expressions[n];
+                    //        if (resultSelector.NodeType == ExpressionType.Lambda)
+                    //        {
+                    //            Expression resultSelectorBody = ((LambdaExpression)resultSelector).Body;
+                    //        }
+                    //    }
+                    //    break;
                 }
 
                 return Expression.Call(expression, methodInfo, expressions);
@@ -300,7 +345,7 @@ namespace SkyLinq.Composition
             return Expression.Call(expression, methodInfo1, expressions);
         }
 
-        internal override Expression VisitParameter(ParameterExpression p)
+        protected override Expression VisitParameter(ParameterExpression p)
         {
             return p;
         }

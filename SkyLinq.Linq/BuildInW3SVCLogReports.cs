@@ -100,7 +100,7 @@ namespace SkyLinq.Linq
                 //.GroupBy(us => us, (us, uss) => new KeyValuePair<string, int>(us, uss.Count()))
                 //.OrderByDescending(kv => kv.Value)
                 //.Take(25)
-                .Top(25, kv=> kv.Value)
+                .Top(kv=> kv.Value, 25)
                 .Select(kv => new Dictionary<string, object>() { { "Url", kv.Key }, { "Hits", kv.Value } });
         }
     }
