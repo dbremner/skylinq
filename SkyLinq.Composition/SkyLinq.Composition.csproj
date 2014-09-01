@@ -41,7 +41,19 @@
   <ItemGroup>
     <Compile Include="CodeGenUtil.cs" />
     <Compile Include="DuckTypingProxyFactory.cs" />
+    <Compile Include="SkyLinqRewriter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SkyLinqQuery.cs" />
+    <Compile Include="SkyLinqQueryProvider.cs" />
+    <Compile Include="QueryExt.cs" />
+    <Compile Include="ReadOnlyCollectionExtensions.cs" />
+    <Compile Include="TypeHelper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SkyLinq.Linq\SkyLinq.Linq.csproj">
+      <Project>{88c4084b-6643-45fe-9687-857999a230a4}</Project>
+      <Name>SkyLinq.Linq</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

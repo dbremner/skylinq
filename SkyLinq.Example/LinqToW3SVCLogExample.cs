@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using SkyLinq.Linq;
+using SkyLinq.Composition;
 
 namespace SkyLinq.Example
 {
