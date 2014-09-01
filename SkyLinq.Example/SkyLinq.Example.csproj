@@ -56,6 +56,7 @@
     <Compile Include="HttpClientExample.cs" />
     <Compile Include="IExample.cs" />
     <Compile Include="LingToGraphExample.cs" />
+    <Compile Include="LINQPadHostExample.cs" />
     <Compile Include="LinqToW3SVCLogExample.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -63,9 +64,22 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="LINQPadQueries\FileVersion.linq">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="LINQPadQueries\ServerUtility.linq">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="LINQPadQueries\UniqueMethods.linq">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\LINQPadHost\LINQPadHost.csproj">
+      <Project>{deffd738-d79d-4b7f-9a4d-4ce703bd6123}</Project>
+      <Name>LINQPadHost</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SkyLinq.Composition\SkyLinq.Composition.csproj">
       <Project>{c034c431-43c5-44cc-bf65-b2d09bfbbe13}</Project>
       <Name>SkyLinq.Composition</Name>

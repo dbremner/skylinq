@@ -19,8 +19,8 @@ namespace SkyLinq.Web.Models
         private IEnumerable<string> _lines;
         public LogApiModel()
         {
-            //SetUpDirectory();
-            SetUpAzureStorage();
+            SetUpDirectory();
+            //SetUpAzureStorage();
         }
 
         private void SetUpDirectory()

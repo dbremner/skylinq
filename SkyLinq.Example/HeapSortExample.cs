@@ -28,7 +28,6 @@ namespace SkyLinq.Example
             IEnumerable<int> top10 = a.Top(10);
             Print("Top 10", top10);
 
-            Console.Read();
         }
 
         private static void Print(string comment, IEnumerable<int> a)

@@ -21,6 +21,8 @@ namespace SkyLinq.Example
 
             new HeapSort().Run();
 
+            new LINQPadHostExample().Run();
+
             Console.Read();
         }
     }
