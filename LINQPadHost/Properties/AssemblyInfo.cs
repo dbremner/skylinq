@@ -6,9 +6,9 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("LINQPadHost")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("A simple LINQPad query Host")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Li Chen")]
 [assembly: AssemblyProduct("LINQPadHost")]
 [assembly: AssemblyCopyright("Copyright © Li Chen 2014")]
 [assembly: AssemblyTrademark("")]

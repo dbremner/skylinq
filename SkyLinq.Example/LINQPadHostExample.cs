@@ -12,9 +12,6 @@ namespace SkyLinq.Example
     {
         public void Run()
         {
-            //string file = @"C:\Users\lichen\Documents\LINQPad Queries\ServerUtility.linq";
-            //string file = @"C:\Users\lichen\Documents\LINQPad Queries\FileVersion.linq";
-            //string file = @"C:\Users\lichen\Documents\LINQPad Queries\UniqueMethods.linq";
             Host host = new Host();
             foreach (var file in Directory.GetFiles(".\\LINQPadQueries", "*.linq"))
             {

@@ -6,9 +6,9 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("SkyLinq.Composition")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Sky Linq programming by composition library")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Li Chen")]
 [assembly: AssemblyProduct("SkyLinq.Composition")]
 [assembly: AssemblyCopyright("Copyright © Li Chen 2014")]
 [assembly: AssemblyTrademark("")]
