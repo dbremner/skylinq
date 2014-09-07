@@ -73,5 +73,7 @@ namespace LINQPadHost
                 this.kindField = value;
             }
         }
+
+        public string Code { get; set; }
     }
 }

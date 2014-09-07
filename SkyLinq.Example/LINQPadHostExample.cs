@@ -15,7 +15,7 @@ namespace SkyLinq.Example
             Host host = new Host();
             foreach (var file in Directory.GetFiles(".\\LINQPadQueries", "*.linq"))
             {
-                host.Run<JsonTextSerializer>(file);
+                host.Run<JsonTextSerializer>(file, Console.Out);
             }
         }
     }

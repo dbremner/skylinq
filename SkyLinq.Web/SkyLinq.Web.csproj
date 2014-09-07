@@ -181,11 +181,13 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LogApiController.cs" />
+    <Compile Include="Controllers\SkyLINQPadController.cs" />
     <Compile Include="Controllers\SkyLogController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\LINQPadViewModel.cs" />
     <Compile Include="Models\LogApiModel.cs" />
     <Compile Include="Models\LogModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -255,8 +257,13 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\SkyLog\Index.cshtml" />
     <Content Include="Scripts\jquery-2.1.1.min.map" />
+    <Content Include="Views\SkyLINQPad\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\LINQPadHost\LINQPadHost.csproj">
+      <Project>{deffd738-d79d-4b7f-9a4d-4ce703bd6123}</Project>
+      <Name>LINQPadHost</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SkyLinq.Linq\SkyLinq.Linq.csproj">
       <Project>{88c4084b-6643-45fe-9687-857999a230a4}</Project>
       <Name>SkyLinq.Linq</Name>

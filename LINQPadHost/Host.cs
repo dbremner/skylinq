@@ -17,27 +17,56 @@ namespace LINQPadHost
 {
     public class Host
     {
-        public void Run<T>(string file) where T : ITextSerializer, new()
+        public void Run<T>(string file, TextWriter tw) where T : ITextSerializer, new()
         {
             CompilerResults cr = CompileLinqFile(file);
-            Run<T>(cr);
+            Run<T>(cr, tw);
             File.Delete(cr.PathToAssembly);
         }
 
-        public void Run<T>(CompilerResults cr) where T : ITextSerializer, new()
+        public void Run<T>(StreamReader sr, TextWriter tw) where T : ITextSerializer, new()
         {
-            AppDomain domain = AppDomain.CreateDomain("New domain");
-            AppDomainHelper helper = (AppDomainHelper)domain.CreateInstanceAndUnwrap("LINQPadHost", "LINQPadHost.AppDomainHelper");
+            CompilerResults cr = CompileLinqFile(sr);
+            Run<T>(cr, tw);
+            File.Delete(cr.PathToAssembly);
+        }
+
+        public void Run<T>(CompilerResults cr, TextWriter tw) where T : ITextSerializer, new()
+        {
+            Type helperType = typeof(AppDomainHelper);
+            string appBasePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase).Substring(6);
+            AppDomain domain = AppDomain.CreateDomain("New domain", AppDomain.CurrentDomain.Evidence,
+                new AppDomainSetup() { ApplicationBase = appBasePath });
+            AppDomainHelper helper = (AppDomainHelper)domain.CreateInstanceAndUnwrap(helperType.Assembly.FullName, helperType.FullName);
             ILinqpadQuery compiledQuery = helper.CreateQuery(cr.PathToAssembly);
             compiledQuery.InitSerializer<JsonTextSerializer>();
-            compiledQuery.Out = Console.Out;
+            compiledQuery.Out = tw;
             compiledQuery.Run();
             AppDomain.Unload(domain);
         }
 
         public CompilerResults CompileLinqFile(string file)
         {
+            Query query = ParseLinqFile(file);
+
+            return CompileLinqQuery(query);
+        }
+
+        public CompilerResults CompileLinqFile(StreamReader sr)
+        {
+            Query query = ParseLinqFile(sr);
+
+            return CompileLinqQuery(query);
+        }
+
+        public Query ParseLinqFile(string file)
+        {
             StreamReader sr = File.OpenText(file);
+            return ParseLinqFile(sr);
+        }
+
+        public Query ParseLinqFile(StreamReader sr)
+        {
             StringBuilder sb = new StringBuilder();
             string line;
             while (!string.IsNullOrEmpty(line = sr.ReadLine()))
@@ -47,32 +76,38 @@ namespace LINQPadHost
 
             XmlSerializer serializer = new XmlSerializer(typeof(Query));
             Query query = (Query)serializer.Deserialize(new StringReader(sb.ToString()));
-            Console.WriteLine("Kind: " + query.Kind);
-            sb = new StringBuilder();
-            if (query.Namespace != null)
-            {
-                foreach (var ns in query.Namespace)
-                {
-                    //Console.WriteLine("Namespace: " + ns);
-                    sb.AppendLine("using " + ns + ";");
-                }
-            }
-
-            //string source = File.ReadAllText("Template.cs");
-            string source = new StreamReader(Assembly.GetExecutingAssembly()
-                .GetManifestResourceStream("LINQPadHost.Template.cs")).ReadToEnd();
-            source = source.Replace("//{Namespaces}//", sb.ToString());
-
-            //foreach (var r in query.Reference)
-            //{
-            //    Console.WriteLine("Reference: " + r);
-            //}
+            //Console.WriteLine("Kind: " + query.Kind);
 
             sb = new StringBuilder();
             while (!sr.EndOfStream)
             {
                 sb.AppendLine(sr.ReadLine());
             }
+            query.Code = sb.ToString();
+            return query;
+        }
+
+        public  CompilerResults CompileLinqQuery(Query query)
+        {
+            StringBuilder sbNamespaces = new StringBuilder();
+            if (query.Namespace != null)
+            {
+                foreach (var ns in query.Namespace)
+                {
+                    //Console.WriteLine("Namespace: " + ns);
+                    sbNamespaces.AppendLine("using " + ns + ";");
+                }
+            }
+
+            //string source = File.ReadAllText("Template.cs");
+            string template = new StreamReader(Assembly.GetExecutingAssembly()
+                .GetManifestResourceStream("LINQPadHost.Template.cs")).ReadToEnd();
+            template = template.Replace("//{Namespaces}//", sbNamespaces.ToString());
+
+            //foreach (var r in query.Reference)
+            //{
+            //    Console.WriteLine("Reference: " + r);
+            //}
 
             string replacePart;
             if ("Expression".Equals(query.Kind))
@@ -83,7 +118,7 @@ namespace LINQPadHost
             {
                 replacePart = "//{Statements}//";
             }
-            source = source.Replace(replacePart, sb.ToString());
+            template = template.Replace(replacePart, query.Code);
 
             CSharpCodeProvider provider = new CSharpCodeProvider();
             CompilerParameters cp = new CompilerParameters();
@@ -99,7 +134,7 @@ namespace LINQPadHost
 	                "System.Data.Linq.dll",
 	                "System.Drawing.dll",
 	                "System.Data.DataSetExtensions.dll",
-                    "LINQPadHost.dll"
+                    Assembly.GetExecutingAssembly().Location
                 };
             foreach (var linqPadAssembly in linqPadAssemblies)
             {
@@ -127,21 +162,21 @@ namespace LINQPadHost
             }
             cp.GenerateExecutable = false;
             cp.GenerateInMemory = false;
-            CompilerResults cr = provider.CompileAssemblyFromSource(cp, source);
-            if (cr.Errors.Count > 0)
-            {
-                // Display compilation errors.
-                Console.WriteLine("Errors building");
-                foreach (CompilerError ce in cr.Errors)
-                {
-                    Console.WriteLine("  {0}", ce.ToString());
-                    Console.WriteLine();
-                }
-            }
-            else
-            {
-                Console.WriteLine("successfully build.");
-            }
+            CompilerResults cr = provider.CompileAssemblyFromSource(cp, template);
+            //if (cr.Errors.Count > 0)
+            //{
+            //    // Display compilation errors.
+            //    Console.WriteLine("Errors building");
+            //    foreach (CompilerError ce in cr.Errors)
+            //    {
+            //        Console.WriteLine("  {0}", ce.ToString());
+            //        Console.WriteLine();
+            //    }
+            //}
+            //else
+            //{
+            //    Console.WriteLine("successfully build.");
+            //}
             return cr;
         }
     }
