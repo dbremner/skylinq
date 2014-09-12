@@ -18,7 +18,7 @@ namespace SkyLinq.Web.Controllers
             LINQPadViewModel model = new LINQPadViewModel()
             {
                 Kind = KindEnum.Expression,
-                Code = "Please type some code here.",
+                Code = "",
                 Results = "Please click run to see results."
             };
             return View(model);

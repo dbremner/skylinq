@@ -68,5 +68,15 @@
     @Html.DisplayFor(model => model.Results)
 </div>
 @section Scripts {
-    @*@Scripts.Render("~/bundles/jqueryval")*@
+    <script src="@Url.Content("/Scripts/codemirror.js")"></script>
+    <script src="@Url.Content("/Scripts/mode/clike/clike.js")"></script>
+    <script>
+        var editor = CodeMirror.fromTextArea(document.getElementById("Code"), {
+            lineNumbers: true,
+            mode: "text/x-csharp"
+        });
+    </script>
+}
+@section Styles {
+    <link rel="stylesheet" href="@Url.Content("/Content/codemirror.css")">
 }
