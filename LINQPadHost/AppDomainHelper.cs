@@ -12,9 +12,9 @@ namespace LINQPadHost
 {
     public class AppDomainHelper : MarshalByRefObject
     {
-        public ILinqpadQuery CreateQuery(string assembly)
+        public ILinqpadQuery CreateQuery(byte[] assembly)
         {
-            Assembly asm = Assembly.LoadFrom(assembly);
+            Assembly asm = Assembly.Load(assembly);
             return (ILinqpadQuery)asm.CreateInstance("LINQPadHost.Template");
         }
     }

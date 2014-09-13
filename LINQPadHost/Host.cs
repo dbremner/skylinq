@@ -7,6 +7,8 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Security;
+using System.Security.Permissions;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -21,6 +23,12 @@ namespace LINQPadHost
         {
             CompilerResults cr = CompileLinqFile(file);
             Run<T>(cr, tw);
+        }
+
+        public void Run<T>(CompilerResults cr, TextWriter tw) where T : ITextSerializer, new()
+        {
+            byte[] assembly = File.ReadAllBytes(cr.PathToAssembly);
+            Run<T>(assembly, tw);
             File.Delete(cr.PathToAssembly);
         }
 
@@ -28,17 +36,21 @@ namespace LINQPadHost
         {
             CompilerResults cr = CompileLinqFile(sr);
             Run<T>(cr, tw);
-            File.Delete(cr.PathToAssembly);
         }
 
-        public void Run<T>(CompilerResults cr, TextWriter tw) where T : ITextSerializer, new()
+        public void Run<T>(byte[] assembly, TextWriter tw) where T : ITextSerializer, new()
         {
             Type helperType = typeof(AppDomainHelper);
             string appBasePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase).Substring(6);
+            var setup = new AppDomainSetup { ApplicationBase = appBasePath };
+            //var permissions = new PermissionSet(PermissionState.None);
+            //permissions.AddPermission(new SecurityPermission(SecurityPermissionFlag.Execution));
+            //permissions.AddPermission(new EnvironmentPermission(PermissionState.Unrestricted));
+            //permissions.AddPermission(new ReflectionPermission(ReflectionPermissionFlag.RestrictedMemberAccess));
             AppDomain domain = AppDomain.CreateDomain("New domain", AppDomain.CurrentDomain.Evidence,
-                new AppDomainSetup() { ApplicationBase = appBasePath });
+                setup/*, permissions*/);
             AppDomainHelper helper = (AppDomainHelper)domain.CreateInstanceAndUnwrap(helperType.Assembly.FullName, helperType.FullName);
-            ILinqpadQuery compiledQuery = helper.CreateQuery(cr.PathToAssembly);
+            ILinqpadQuery compiledQuery = helper.CreateQuery(assembly);
             compiledQuery.InitSerializer<JsonTextSerializer>();
             compiledQuery.Out = tw;
             compiledQuery.Run();
@@ -109,16 +121,14 @@ namespace LINQPadHost
             //    Console.WriteLine("Reference: " + r);
             //}
 
-            string replacePart;
             if ("Expression".Equals(query.Kind))
             {
-                replacePart = "//{Expression}//";
+                template = template.Replace("//{Expression}//", "(" + query.Code + ")");
             }
             else
             {
-                replacePart = "//{Statements}//";
+                template = template.Replace("//{Statements}//", query.Code);
             }
-            template = template.Replace(replacePart, query.Code);
 
             CSharpCodeProvider provider = new CSharpCodeProvider();
             CompilerParameters cp = new CompilerParameters();
