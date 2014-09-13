@@ -1,14 +1,18 @@
 ﻿<div class="jumbotron">
     <h1>SkyLINQ</h1>
-    <p class="lead">SkyLINQ is a Li Chen's playground on LINQ (Language Integrated Query), Rx (Reactive Extension), ASP.NET MVC and Web API.</p>
-    <p><a href="http://weblogs.asp.net/lichen/Tags/LINQ" class="btn btn-primary btn-large">Learn more &raquo;</a></p>
+    <p class="lead">
+        SkyLINQ is Li Chen's playground on LINQ (Language Integrated Query), Rx (Reactive Extension), ASP.NET MVC and Web API.
+        If you have any questions, the best way to contact me is from my blog site or project site. To get the latest news, follow me
+        on Twitter @aspcompiler.
+    </p>
+    <p><a href="http://weblogs.asp.net/lichen/Tags/LINQ" class="btn btn-primary btn-large">My blogs &raquo;</a></p>
 </div>
 <div class="row">
     <div class="col-md-4">
         <h2>Getting started</h2>
         <p>
-            The SkyLINQ project is a collection of ideas to make LINQ better. It has several algorithms to improve LINQ some edge cases such
-            as memory effieicent GroupBy and TopK implementation. It has a LINQ optimizer using query rewriter. It has Sky LINQPad, a cloud based
+            The SkyLINQ project is a collection of ideas to make LINQ better. It has several algorithms to improve LINQ on some edge cases such
+            as memory effieicent GroupBy and TopK implementations. It has a LINQ optimizer by query rewriting. It has Sky LINQPad, a cloud-based
             mini LINQPad clone.
         </p>
         <p><a class="btn btn-default" href="http://skylinq.codeplex.com">Project site &raquo;</a></p>
@@ -17,8 +21,9 @@
         <h2>Get the libraries</h2>
         <p>
             Three parts of this project are available for download via Nuget. SkyLinq.Linq is a portal library that contains some LINQ extensions.
-            SkyLinq.Composition is my duck-typing implementation. It is similar to Impromptu-Interface but it is much simpler. It uses IL (instead of LINQ Expressions)
-            to generate code so I hope it would perform better. LINQPadHost is an hosting and executing environment for LINQPad queries.
+            SkyLinq.Composition is my duck-typing implementation. It is similar to Impromptu-Interface but it is much simpler
+            and it uses il.emit instead of LINQ Expressions to generate code.
+            LINQPadHost is a hosting and executing environment for LINQPad queries.
         </p>
         <p><a class="btn btn-default" href="https://www.nuget.org/packages?q=skylinq">Get the binaries &raquo;</a></p>
     </div>
