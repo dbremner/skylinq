@@ -1,24 +1,33 @@
 ﻿<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-large">Learn more &raquo;</a></p>
+    <h1>SkyLINQ</h1>
+    <p class="lead">SkyLINQ is a Li Chen's playground on LINQ (Language Integrated Query), Rx (Reactive Extension), ASP.NET MVC and Web API.</p>
+    <p><a href="http://weblogs.asp.net/lichen/Tags/LINQ" class="btn btn-primary btn-large">Learn more &raquo;</a></p>
 </div>
 <div class="row">
     <div class="col-md-4">
         <h2>Getting started</h2>
-        <p>ASP.NET Web API is a framework that makes it easy to build HTTP services that reach
-        a broad range of clients, including browsers and mobile devices. ASP.NET Web API
-        is an ideal platform for building RESTful applications on the .NET Framework.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301870">Learn more &raquo;</a></p>
+        <p>
+            The SkyLINQ project is a collection of ideas to make LINQ better. It has several algorithms to improve LINQ some edge cases such
+            as memory effieicent GroupBy and TopK implementation. It has a LINQ optimizer using query rewriter. It has Sky LINQPad, a cloud based
+            mini LINQPad clone.
+        </p>
+        <p><a class="btn btn-default" href="http://skylinq.codeplex.com">Project site &raquo;</a></p>
     </div>
     <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301871">Learn more &raquo;</a></p>
+        <h2>Get the libraries</h2>
+        <p>
+            Three parts of this project are available for download via Nuget. SkyLinq.Linq is a portal library that contains some LINQ extensions.
+            SkyLinq.Composition is my duck-typing implementation. It is similar to Impromptu-Interface but it is much simpler. It uses IL (instead of LINQ Expressions)
+            to generate code so I hope it would perform better. LINQPadHost is an hosting and executing environment for LINQPad queries.
+        </p>
+        <p><a class="btn btn-default" href="https://www.nuget.org/packages?q=skylinq">Get the source &raquo;</a></p>
     </div>
     <div class="col-md-4">
         <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301872">Learn more &raquo;</a></p>
+        <p>
+            This website is hosted on Microsoft Azure websites. The Sky LINQPad executes in whatever trust level the website gets. I guess we will
+            figure out what we can and cannot do so it will give us idea on how to lock it down if we use it in real products.
+        </p>
+        <p><a class="btn btn-default" href="http://azure.microsoft.com/en-us/services/websites/">Learn more &raquo;</a></p>
     </div>
 </div>

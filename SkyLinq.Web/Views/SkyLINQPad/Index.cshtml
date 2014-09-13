@@ -2,10 +2,10 @@
 @model LINQPadViewModel
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Sky LINQPad";
 }
 
-<h2>Index</h2>
+<h2>Sky LINQPad</h2>
 
 
 @using (Html.BeginForm("Index", "SkyLINQPad", FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -13,7 +13,6 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Sky LINQPad</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -35,7 +34,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.References, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.References, new { htmlAttributes = new { @class = "form-control", rows = "3" } })
+                @Html.EditorFor(model => model.References, new { htmlAttributes = new { @class = "form-control", rows = "2" } })
                 @Html.ValidationMessageFor(model => model.References, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -43,7 +42,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Namespaces, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Namespaces, new { htmlAttributes = new { @class = "form-control", rows = "5" } })
+                @Html.EditorFor(model => model.Namespaces, new { htmlAttributes = new { @class = "form-control", rows = "3" } })
                 @Html.ValidationMessageFor(model => model.Namespaces, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -51,7 +50,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Code, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Code, new { htmlAttributes = new { @class = "form-control", rows = "10" } })
+                @Html.EditorFor(model => model.Code, new { htmlAttributes = new { @class = "form-control", rows = "5" } })
                 @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
             </div>
         </div>
