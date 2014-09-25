@@ -7,11 +7,11 @@
     .bar { background-color:blue; border: 1px solid black; height:10px;}
 </style>
 @foreach (string[] report in Model.GetReports()) { 
-    <div><a href="Javascript:getReport('api/logapi/@report[0]')">@report[1]</a></div>
+    <div><a href="Javascript:getReport('/api/logapi/@report[0]')">@report[1]</a></div>
 }
 <div id="rpt"></div>
 @section scripts {
-<script src="@Url.Content("Scripts/d3.min.js")" data-main="Scripts/main"></script>
+<script src="@Url.Content("/Scripts/d3.min.js")" data-main="Scripts/main"></script>
 <script type="text/javascript">
     function getReport(apiUrl) {
         d3.select("#rpt").html("");
