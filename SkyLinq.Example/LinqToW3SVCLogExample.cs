@@ -16,7 +16,7 @@ namespace SkyLinq.Example
             string directory = @"G:\codecamp\Linq\LogFiles";
 
             var lines = Directory.EnumerateFiles(directory)
-                .SelectMany(path => LingToText.EnumLines(File.OpenText(path)));
+                .SelectMany(path => LinqToText.EnumLines(File.OpenText(path)));
 
             //QueryW3SVCLogUsingLinqToText(lines);
             //QueryW3SVCLogUsingLinqToDelimited(lines);

@@ -27,7 +27,7 @@ namespace SkyLinq.Web.Models
         {
             string directory = @"G:\codecamp\Linq\LogFiles";
             _lines = Directory.EnumerateFiles(directory)
-                .SelectMany(path => LingToText.EnumLines(File.OpenText(path)));
+                .SelectMany(path => LinqToText.EnumLines(File.OpenText(path)));
         }
 
         private void SetUpAzureStorage()
@@ -40,13 +40,10 @@ namespace SkyLinq.Web.Models
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse(
                 connStr.ConnectionString);
 
-            Uri storageUri = storageAccount.BlobStorageUri.PrimaryUri;
-
             // Create the blob client.
             CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
+            CloudBlobContainer container = blobClient.GetContainerReference("xdorchard");
 
-            // Retrieve a reference to a container. 
-            CloudBlobContainer container = blobClient.GetContainerReference(storageUri.AbsoluteUri);
             int pathLength = container.Uri.AbsolutePath.Length;
 
             _lines = container.ListBlobs(null, true)
@@ -57,7 +54,7 @@ namespace SkyLinq.Web.Models
                 string blobAddressUri = item.Uri.AbsolutePath.Substring(pathLength + 1);
                 CloudBlockBlob blockBlob2 = container.GetBlockBlobReference(blobAddressUri);
                 StreamReader sr = new StreamReader(blockBlob2.OpenRead());
-                return LingToText.EnumLines(sr);
+                return LinqToText.EnumLines(sr);
             });
         }
 

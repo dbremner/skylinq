@@ -7,7 +7,7 @@ using System.IO;
 
 namespace SkyLinq.Linq
 {
-    public static class LingToText
+    public static class LinqToText
     {
         public static IEnumerable<string> EnumLines(StreamReader sr)
         {
