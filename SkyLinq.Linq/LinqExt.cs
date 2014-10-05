@@ -9,6 +9,7 @@ namespace SkyLinq.Linq
 {
     public static class LinqExt
     {
+        #region GroupBy
         /// <summary>
         /// Group by using accumulator thus reducing the memory footprint. Memory usage proportional to number of groups.
         /// See http://weblogs.asp.net/lichen/archive/2013/12/14/be-aware-of-the-memory-implication-of-groupby-in-linq.aspx for more information.
@@ -42,7 +43,9 @@ namespace SkyLinq.Linq
             }
             return dict;
         }
+        #endregion
 
+        #region TopK and BottomK
         public static IEnumerable<TSource> Top<TSource>(this IEnumerable<TSource> source,
             int n)
         {
@@ -88,7 +91,7 @@ namespace SkyLinq.Linq
             return source.TakeOrdered(n, keySelector, comparer, true);
         }
 
-        private static IEnumerable<TSource> TakeOrdered<TSource, TKey>(this IEnumerable<TSource> source, 
+         private static IEnumerable<TSource> TakeOrdered<TSource, TKey>(this IEnumerable<TSource> source, 
             int n,
             Func<TSource, TKey> keySelector,
             IComparer<TKey> comparer, 
@@ -128,5 +131,67 @@ namespace SkyLinq.Linq
             for (int i = 0; i < heap.Size; i++)
                 yield return a[i];
         }
+        #endregion
+
+        #region MinIndex and MaxIndex
+
+         public static Tuple<TSource, long> MaxWithIndex<TSource>(this IEnumerable<TSource> source)
+        {
+            return MaxWithIndex(source, Comparer<TSource>.Default);
+        }
+        public static Tuple<TSource, long> MaxWithIndex<TSource>(this IEnumerable<TSource> source, IComparer<TSource> comparer)
+        {
+            Func<int, bool> continuePredicate = i => i <= 0;
+            return MaxMinWithIndex<TSource>(source, comparer, continuePredicate);
+        }
+
+        public static Tuple<TSource, long> MinWithIndex<TSource>(this IEnumerable<TSource> source)
+        {
+            return MinWithIndex(source, Comparer<TSource>.Default);
+        }
+        public static Tuple<TSource, long> MinWithIndex<TSource>(this IEnumerable<TSource> source, IComparer<TSource> comparer)
+        {
+            Func<int, bool> continuePredicate = i => i >= 0;
+            return MaxMinWithIndex<TSource>(source, comparer, continuePredicate);
+        }
+
+        private static Tuple<TSource,long> MaxMinWithIndex<TSource>(IEnumerable<TSource> source, IComparer<TSource> comparer, Func<int, bool> contPredicate)
+        {
+            if (source == null)
+            {
+                throw new ArgumentNullException("source");
+            }
+
+            TSource tSource = default(TSource);
+            long foundIndex = -1;
+            long index = -1;
+            bool found = false;
+
+            foreach (TSource elem in source)
+            {
+                index++;
+                if (!found)
+                {
+                    tSource = elem;
+                    found = true;
+                }
+                else
+                {
+                    if (contPredicate(comparer.Compare(elem, tSource)))
+                    {
+                        continue;
+                    }
+                    tSource = elem;
+                }
+                foundIndex = index;
+            }
+            if (!found)
+            {
+                throw new InvalidOperationException("No elements");
+            }
+            return Tuple.Create(tSource, foundIndex);
+        }
+
+        #endregion
     }
 }

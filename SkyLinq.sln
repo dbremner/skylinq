@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkyLinq.Linq", "SkyLinq.Linq\SkyLinq.Linq.csproj", "{88C4084B-6643-45FE-9687-857999A230A4}"
 EndProject
@@ -21,6 +21,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkyLinq.Example", "SkyLinq.Example\SkyLinq.Example.csproj", "{C66486CB-F383-48E8-9A9D-E2EB237194F9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LINQPadHost", "LINQPadHost\LINQPadHost.csproj", "{DEFFD738-D79D-4B7F-9A4D-4CE703BD6123}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkyLinq.Linq.Test", "SkyLinq.Linq.Test\SkyLinq.Linq.Test.csproj", "{5E943244-B7C9-4964-B0B2-3BEA7CEF03C8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -52,6 +54,10 @@ Global
 		{DEFFD738-D79D-4B7F-9A4D-4CE703BD6123}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DEFFD738-D79D-4B7F-9A4D-4CE703BD6123}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DEFFD738-D79D-4B7F-9A4D-4CE703BD6123}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E943244-B7C9-4964-B0B2-3BEA7CEF03C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E943244-B7C9-4964-B0B2-3BEA7CEF03C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E943244-B7C9-4964-B0B2-3BEA7CEF03C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E943244-B7C9-4964-B0B2-3BEA7CEF03C8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
