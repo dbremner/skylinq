@@ -159,7 +159,7 @@ namespace SkyLinq.Linq
         {
             if (source == null)
             {
-                throw new ArgumentNullException("source");
+                throw new ArgumentNullException(nameof(source));
             }
 
             TSource tSource = default(TSource);

@@ -17,7 +17,7 @@ namespace SkyLinq.Composition
         {
             if (enumerable == null)
             {
-                throw new ArgumentNullException("enumerable");
+                throw new ArgumentNullException(nameof(enumerable));
             }
 
             _enumerable = enumerable;
@@ -27,7 +27,7 @@ namespace SkyLinq.Composition
         {
             if (expression == null)
             {
-                throw new ArgumentNullException("expression");
+                throw new ArgumentNullException(nameof(expression));
             }
             Type type = TypeHelper.FindGenericType(typeof(IQueryable<>), expression.Type);
             if (type == null)
@@ -43,7 +43,7 @@ namespace SkyLinq.Composition
         {
             if (expression == null)
             {
-                throw new ArgumentNullException("expression");
+                throw new ArgumentNullException(nameof(expression));
             }
             Type type = TypeHelper.FindGenericType(typeof(IQueryable<>), expression.Type);
             if (type == null)
