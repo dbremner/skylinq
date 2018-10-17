@@ -18,13 +18,13 @@ namespace SkyLinq.Example
             set 
             { 
                 this._name = value;
-                Console.WriteLine(string.Format("Duck name set to {0}.", value));
+                Console.WriteLine("Duck name set to {0}.", value);
             }
         }
 
         public void Quack(int times)
         {
-            Console.WriteLine(string.Format("Duck quacked {0} times.", times));
+            Console.WriteLine("Duck quacked {0} times.", times);
         }
 
         public double Walk()
@@ -54,10 +54,10 @@ namespace SkyLinq.Example
 
             //Calling proxy
             proxy.Name = "Oregon";
-            Console.WriteLine(string.Format("Duck name is {0}.", proxy.Name));
+            Console.WriteLine("Duck name is {0}.", proxy.Name);
             proxy.Quack(3);
             double yards = proxy.Walk();
-            Console.WriteLine(string.Format("Duck walked {0} yards.", yards));
+            Console.WriteLine("Duck walked {0} yards.", yards);
         }
     }
 
