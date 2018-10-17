@@ -31,7 +31,7 @@ namespace SkyLinq.Composition
         internal SkyLinqQuery(IEnumerable<TElement> elements)
         {
             if (elements == null)
-                throw new ArgumentNullException("provider");
+                throw new ArgumentNullException("elements");
 
             IQueryable<TElement> queryable = elements.AsQueryable<TElement>();
             _elements = elements;

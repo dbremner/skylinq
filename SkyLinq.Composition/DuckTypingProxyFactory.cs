@@ -30,7 +30,7 @@ namespace SkyLinq.Composition
                 throw new ArgumentException("proxyInterfaceType must be a type of an interface.");
 
             if (otherDuck == null)
-                throw new ArgumentNullException("Object to be wrapped cannot be null");
+                throw new ArgumentNullException("otherDuck");
         }
         #endregion
 
