@@ -31,7 +31,9 @@ namespace SkyLinq.Composition
         internal SkyLinqQuery(IEnumerable<TElement> elements)
         {
             if (elements == null)
+            {
                 throw new ArgumentNullException(nameof(elements));
+            }
 
             IQueryable<TElement> queryable = elements.AsQueryable<TElement>();
             _elements = elements;
@@ -42,13 +44,19 @@ namespace SkyLinq.Composition
         internal SkyLinqQuery(IQueryProvider provider, Expression expression)
         {
             if (provider == null)
+            {
                 throw new ArgumentNullException(nameof(provider));
+            }
 
             if (expression == null)
+            {
                 throw new ArgumentNullException(nameof(expression));
+            }
 
             if (!typeof(IQueryable<TElement>).GetTypeInfo().IsAssignableFrom(expression.Type.GetTypeInfo()))
+            {
                 throw new ArgumentOutOfRangeException(nameof(expression));
+            }
 
             _expression = expression;
             _provider = provider;

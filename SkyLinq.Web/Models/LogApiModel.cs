@@ -35,7 +35,9 @@ namespace SkyLinq.Web.Models
             // Retrieve storage account from connection string.
             var connStr = ConfigurationManager.ConnectionStrings["StorageConnectionString"];
             if (connStr == null || string.IsNullOrEmpty(connStr.ConnectionString))
+            {
                 throw new Exception("StorageConnectionString not configured.");
+            }
 
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse(
                 connStr.ConnectionString);

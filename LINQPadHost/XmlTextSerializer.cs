@@ -13,7 +13,9 @@ namespace LINQPadHost
         public void Serialize(TextWriter textWriter, object o)
         {
             if (o == null)
+            {
                 textWriter.WriteLine("(null)");
+            }
 
             string s = o as string;
             if (s == null)

@@ -74,18 +74,25 @@ namespace SkyLinq.Linq.Algoritms
         public void Insert(TSource newItem)
         {
             if (_size == _a.Length)
+            {
                 throw new InvalidOperationException("Heap is full.");
+            }
 
             _a[_size] = newItem;
             if (_size > 0)
+            {
                 SiftUp(_a, 0, _size, _keySelector, _comparer, _heapPropertyPredicate);
+            }
+
             _size++;
         }
 
         public TSource Peak()
         {
             if (_size == 0)
+            {
                 throw new InvalidOperationException("Heap is empty.");
+            }
 
             return _a[0];
         }
@@ -120,9 +127,13 @@ namespace SkyLinq.Linq.Algoritms
         private void SetHeapProperty(HeapProperty heapProperty)
         {
             if (heapProperty == HeapProperty.MaxHeap)
+            {
                 _heapPropertyPredicate = (b) => !b;
+            }
             else
+            {
                 _heapPropertyPredicate = (b) => b;
+            }
         }
 
         #region static methods
@@ -197,9 +208,13 @@ namespace SkyLinq.Linq.Algoritms
             Func<bool, bool> predicate;
             
             if (ascending)
+            {
                 predicate = (b) => !b;
+            }
             else
+            {
                 predicate = (b) => b;
+            }
 
             Heapify(a, size, keySelector, comparer, predicate);
             SortHeapified(a, size, keySelector, comparer, predicate);
@@ -218,7 +233,9 @@ namespace SkyLinq.Linq.Algoritms
                     child = parent;
                 }
                 else
+                {
                     return;
+                }
             }
         }
 
@@ -231,16 +248,24 @@ namespace SkyLinq.Linq.Algoritms
                 int swap = root;
 
                 if (predicate(comparer.Compare(keySelector(a[swap]), keySelector(a[child])) > 0))
+                {
                     swap = child;
+                }
+
                 if (child + 1 <= end && predicate(comparer.Compare(keySelector(a[swap]), keySelector(a[child + 1])) > 0)) //right child
+                {
                     swap = child + 1;
+                }
+
                 if (swap != root)
                 {
                     Swap(a, root, swap);
                     root = swap; //Repeart to continue sifitng down the child now
                 }
                 else
+                {
                     return;
+                }
             }
         }
 

@@ -88,15 +88,22 @@ namespace SkyLinq.Web.Http
             {
                 colNo++;
                 if (colNo > 1)
+                {
                     writer.Write(',');
+                }
+
                 object val = kvp.Value;
                 if (val != null)
                 {
                     Type valType = val.GetType();
                     if (valType.IsPrimitive || valType == typeof(DateTime))
+                    {
                         writer.Write("{0}", val);
+                    }
                     else
+                    {
                         writer.Write("\"{0}\"", val.ToString().Replace("\"", "\"\""));
+                    }
                 }
             }
         }
@@ -108,7 +115,10 @@ namespace SkyLinq.Web.Http
             {
                 colNo++;
                 if (colNo > 1)
+                {
                     writer.Write(',');
+                }
+
                 writer.Write("\"{0}\"", kvp.Key);
             }
         }

@@ -38,7 +38,10 @@ namespace SkyLinq.Composition
         public static ConstructorInfo GetConstructorInfo<T>(Expression<Func<T>> expression)
         {
             var body = expression.Body as NewExpression;
-            if (body == null) throw new InvalidOperationException("Invalid expression form passed");
+            if (body == null)
+            {
+                throw new InvalidOperationException("Invalid expression form passed");
+            }
 
             return body.Constructor;
         }

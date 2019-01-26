@@ -27,10 +27,14 @@ namespace SkyLinq.Composition
         private static void ValidateParams(Type typeOfIMyDuck, object otherDuck)
         {
             if (!typeOfIMyDuck.IsInterface)
+            {
                 throw new ArgumentException("proxyInterfaceType must be a type of an interface.");
+            }
 
             if (otherDuck == null)
+            {
                 throw new ArgumentNullException(nameof(otherDuck));
+            }
         }
         #endregion
 
@@ -42,7 +46,10 @@ namespace SkyLinq.Composition
             //If obj already implements TProxy, simply return it
             TIMyDuck o = otherDuck as TIMyDuck;
 
-            if (o != null) return o;
+            if (o != null)
+            {
+                return o;
+            }
 
             Type proxyType;
             Type typeOfOtherDuck = otherDuck.GetType();
@@ -53,7 +60,9 @@ namespace SkyLinq.Composition
                 {
                     //Generate the proxyType here
                     if (!CanBeDuckTypedTo<TIMyDuck>(otherDuck))
+                    {
                         throw new ArgumentException("Object cannot be duck typed by the interface.");
+                    }
 
                     proxyType = GenerateProxyType(typeOfIMyDuck, otherDuck.GetType());
 

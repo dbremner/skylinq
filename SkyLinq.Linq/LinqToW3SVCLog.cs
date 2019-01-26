@@ -22,7 +22,9 @@ namespace SkyLinq.Linq
         {
             int mappedColumnNo = masterToActualMap[i];
             if (mappedColumnNo < 0)
+            {
                 throw new ArgumentOutOfRangeException(string.Format("Column {0} is not logged.", LinqToW3SVCLog.masterHeaders[i]));
+            }
 
             return mappedColumnNo;
         }

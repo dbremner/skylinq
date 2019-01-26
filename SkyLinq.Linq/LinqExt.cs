@@ -115,7 +115,9 @@ namespace SkyLinq.Linq
             foreach (TSource item in source)
             {
                 if (heap.Size < heap.Capacity)
+                {
                     heap.Insert(item);
+                }
                 else
                 {
                     if (predicate(comparer.Compare(keySelector(heap.Peak()), keySelector(item)) < 0))
@@ -129,7 +131,9 @@ namespace SkyLinq.Linq
             Debug.WriteLine(string.Join(", ", a));
             BinaryHeap<TSource, TKey>.SortHeapified(a, heap.Size, keySelector, comparer, predicate);
             for (int i = 0; i < heap.Size; i++)
+            {
                 yield return a[i];
+            }
         }
         #endregion
 

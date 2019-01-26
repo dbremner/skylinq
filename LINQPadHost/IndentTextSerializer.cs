@@ -17,12 +17,16 @@ namespace LINQPadHost
         private void Serialize(TextWriter textWriter, object o, int indent)
         {
             if (o == null)
+            {
                 WriteLine(textWriter, "(null)", indent);
+            }
             else
             {
                 string s = o as string;
                 if (s != null)
+                {
                     WriteLine(textWriter, o, indent);
+                }
                 else
                 {
                     IEnumerable seq = o as IEnumerable;
@@ -34,7 +38,9 @@ namespace LINQPadHost
                         }
                     }
                     else
+                    {
                         WriteLine(textWriter, o, indent);
+                    }
                 }
             }
         }

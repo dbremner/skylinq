@@ -11,7 +11,9 @@ namespace LINQPadHost
         public void Serialize(System.IO.TextWriter textWriter, object o)
         {
             if (o == null)
+            {
                 textWriter.WriteLine("(null)");
+            }
             else
             {
                 JsonSerializer js = new JsonSerializer();

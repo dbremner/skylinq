@@ -43,9 +43,15 @@ namespace SkyLinq.Web.Controllers
                 query = host.ParseLinqFile(new StreamReader(fileUpload.InputStream));
                 ModelState.Clear();
                 if (query.Reference != null)
+                {
                     model.References = string.Join(Environment.NewLine, query.Reference);
+                }
+
                 if (query.Namespace != null)
+                {
                     model.Namespaces = string.Join(Environment.NewLine, query.Namespace);
+                }
+
                 model.Kind = (KindEnum)Enum.Parse(typeof(KindEnum), query.Kind);
                 model.Code = query.Code;
             }
