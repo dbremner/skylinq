@@ -23,7 +23,7 @@ namespace SkyLinq.Composition
                 if (definition.IsInterface)
                 {
                     Type[] interfaces = type.GetInterfaces();
-                    for (int i = 0; i < (int)interfaces.Length; i++)
+                    for (int i = 0; i < interfaces.Length; i++)
                     {
                         Type type1 = TypeHelper.FindGenericType(definition, interfaces[i]);
                         if (type1 != null)

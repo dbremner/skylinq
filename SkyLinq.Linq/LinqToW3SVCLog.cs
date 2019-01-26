@@ -169,9 +169,9 @@ namespace SkyLinq.Linq
 
     public static class LinqToW3SVCLog
     {
-        internal static string[] masterHeaders = "date time s-sitename s-computername s-ip cs-method cs-uri-stem cs-uri-query s-port cs-username c-ip cs(User-Agent) cs(Referer) sc-status sc-substatus sc-win32-status sc-bytes cs-bytes time-taken cs-version cs-host cs(Cookie)"
+        internal static readonly string[] masterHeaders = "date time s-sitename s-computername s-ip cs-method cs-uri-stem cs-uri-query s-port cs-username c-ip cs(User-Agent) cs(Referer) sc-status sc-substatus sc-win32-status sc-bytes cs-bytes time-taken cs-version cs-host cs(Cookie)"
             .Split(' ');
-        internal static IDictionary<string, int> masterDict = masterHeaders.ToPositionDictionary();
+        internal static readonly IDictionary<string, int> masterDict = masterHeaders.ToPositionDictionary();
 
         /// <summary>
         /// Convert W3SVC log lines to W3SVCLogRecord objects

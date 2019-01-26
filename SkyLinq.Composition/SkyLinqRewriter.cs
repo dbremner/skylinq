@@ -22,11 +22,11 @@ namespace SkyLinq.Composition
         private static bool ArgsMatch(MethodInfo m, ReadOnlyCollection<Expression> args, Type[] typeArgs)
         {
             ParameterInfo[] parameters = m.GetParameters();
-            if ((int)parameters.Length != args.Count)
+            if (parameters.Length != args.Count)
             {
                 return false;
             }
-            if (!m.IsGenericMethod && typeArgs != null && (int)typeArgs.Length > 0)
+            if (!m.IsGenericMethod && typeArgs != null && typeArgs.Length > 0)
             {
                 return false;
             }
@@ -36,11 +36,11 @@ namespace SkyLinq.Composition
             }
             if (m.IsGenericMethodDefinition)
             {
-                if (typeArgs == null || (int)typeArgs.Length == 0)
+                if (typeArgs == null || typeArgs.Length == 0)
                 {
                     return false;
                 }
-                if ((int)m.GetGenericArguments().Length != (int)typeArgs.Length)
+                if (m.GetGenericArguments().Length != typeArgs.Length)
                 {
                     return false;
                 }
@@ -101,7 +101,7 @@ namespace SkyLinq.Composition
                 from m in type.GetMethods(flags)
                 where m.Name == name
                 select m).ToArray<MethodInfo>();
-            if ((int)array.Length == 0)
+            if (array.Length == 0)
             {
                 throw new ArgumentException("Unable to find method " + name + " on type " + type);
             }
@@ -120,11 +120,11 @@ namespace SkyLinq.Composition
         private ReadOnlyCollection<Expression> FixupQuotedArgs(MethodInfo mi, ReadOnlyCollection<Expression> argList)
         {
             ParameterInfo[] parameters = mi.GetParameters();
-            if ((int)parameters.Length > 0)
+            if (parameters.Length > 0)
             {
                 List<Expression> expressions = null;
                 int num = 0;
-                int length = (int)parameters.Length;
+                int length = parameters.Length;
                 while (num < length)
                 {
                     Expression item = argList[num];
@@ -190,7 +190,7 @@ namespace SkyLinq.Composition
                 return t;
             }
             Type[] interfaces = t.GetInterfaces();
-            for (int i = 0; i < (int)interfaces.Length; i++)
+            for (int i = 0; i < interfaces.Length; i++)
             {
                 Type type = interfaces[i];
                 if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(IEnumerable<>))
