@@ -44,7 +44,7 @@ namespace SkyLinq.Composition
 
             if (o != null) return o;
 
-            Type proxyType = null;
+            Type proxyType;
             Type typeOfOtherDuck = otherDuck.GetType();
             _cacheLock.EnterUpgradeableReadLock();
             try
