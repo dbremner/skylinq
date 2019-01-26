@@ -319,7 +319,7 @@ namespace SkyLinq.Composition
                                 expressions = new ReadOnlyCollection<Expression>(((MethodCallExpression)innerCall).Arguments.Concat(new Expression[] {nexp}).ToList());
                                 methodInfo = FindMethod(typeof(LinqExt), newMethodName,
                                     expressions,
-                                    innerMI.GetGenericArguments(), 
+                                    innerMI.GetGenericArguments(),
                                     BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
                             }
                         }

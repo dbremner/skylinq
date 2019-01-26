@@ -68,7 +68,7 @@ namespace SkyLinq.Example
                 .Take(20);
 
             ExampleUtil.Dump(uriStemsOrderByCount);
-        }   
+        }
 
         private static void QueryW3SVCLogUisngLingToW3SVCLog(IEnumerable<string> lines)
         {

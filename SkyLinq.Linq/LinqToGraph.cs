@@ -11,19 +11,19 @@ namespace SkyLinq.Linq
     /// </summary>
     public static class LinqToGraph
     {
-        public static IEnumerable<TLeaf> DFS<TInner, TLeaf>(TInner node, Func<TInner, IEnumerable<TInner>> getInners, 
+        public static IEnumerable<TLeaf> DFS<TInner, TLeaf>(TInner node, Func<TInner, IEnumerable<TInner>> getInners,
             Func<TInner, IEnumerable<TLeaf>> getLeafs)
         {
             return getLeafs(node).Concat(getInners(node).SelectMany(n => DFS(n, getInners, getLeafs)));
         }
 
-        public static IEnumerable<TLeaf> BFS<TInner, TLeaf>(TInner node, Func<TInner, IEnumerable<TInner>> getInners, 
+        public static IEnumerable<TLeaf> BFS<TInner, TLeaf>(TInner node, Func<TInner, IEnumerable<TInner>> getInners,
             Func<TInner, IEnumerable<TLeaf>> getLeafs)
         {
             return BFS(node, getInners, getLeafs, new Queue<IEnumerable<TInner>>());
         }
 
-        private static IEnumerable<TLeaf> BFS<TInner, TLeaf>(TInner node, Func<TInner, IEnumerable<TInner>> getInners, 
+        private static IEnumerable<TLeaf> BFS<TInner, TLeaf>(TInner node, Func<TInner, IEnumerable<TInner>> getInners,
             Func<TInner, IEnumerable<TLeaf>> getLeafs, Queue<IEnumerable<TInner>> nodeQueue)
         {
             nodeQueue.Enqueue(getInners(node));
@@ -33,14 +33,14 @@ namespace SkyLinq.Linq
                 .SelectMany(leafs => leafs));
         }
 
-        private static IEnumerable<IEnumerable<TLeaf>> ExecuteQueue<TNode, TLeaf>(Queue<IEnumerable<TNode>> nodeQueue, 
+        private static IEnumerable<IEnumerable<TLeaf>> ExecuteQueue<TNode, TLeaf>(Queue<IEnumerable<TNode>> nodeQueue,
             Func<TNode, IEnumerable<TNode>> getInners, Func<TNode, IEnumerable<TLeaf>> getLeafs)
         {
             while (nodeQueue.Count > 0)
             {
                 var nodes = nodeQueue.Dequeue();
                 foreach(var node in nodes)
-                { 
+                {
                     yield return BFS(node, getInners, getLeafs, nodeQueue);
                 }
             }

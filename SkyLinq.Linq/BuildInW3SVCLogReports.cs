@@ -10,13 +10,13 @@ namespace SkyLinq.Linq
 {
     public static class BuildInW3SVCLogReports
     {
-        public static IEnumerable<IDictionary<string, object>> RunReport(this IEnumerable<string> records, 
+        public static IEnumerable<IDictionary<string, object>> RunReport(this IEnumerable<string> records,
             Func<IEnumerable<IW3SVCLogRecord>, IEnumerable<IDictionary<string, object>>> report)
         {
             return records.AsW3SVCLogRecords().RunReport(report);
         }
 
-        public static IEnumerable<IDictionary<string, object>> RunReport(this IEnumerable<IW3SVCLogRecord> records, 
+        public static IEnumerable<IDictionary<string, object>> RunReport(this IEnumerable<IW3SVCLogRecord> records,
             Func<IEnumerable<IW3SVCLogRecord>, IEnumerable<IDictionary<string, object>>> report)
         {
             return report(records);

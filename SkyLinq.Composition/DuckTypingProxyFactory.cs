@@ -72,7 +72,7 @@ namespace SkyLinq.Composition
                         _typeCache.Add(new Tuple<Type, Type>(typeOfIMyDuck, typeOfOtherDuck), proxyType);
                     }
                     finally
-                    { 
+                    {
                         _cacheLock.ExitWriteLock();
                     }
                 }

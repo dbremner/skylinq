@@ -71,11 +71,11 @@ namespace SkyLinq.Web.Controllers
             {
                 foreach(CompilerError ce in cr.Errors)
                 {
-                    model.Results += ce + "\r\n";    
+                    model.Results += ce + "\r\n";
                 }
             }
             else
-            { 
+            {
                 StringWriter sw = new StringWriter();
                 host.Run<IndentTextSerializer>(cr, sw);
                 model.Results = sw.ToString();

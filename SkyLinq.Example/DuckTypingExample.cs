@@ -15,8 +15,8 @@ namespace SkyLinq.Example
         public string Name
         {
             get { return this._name; }
-            set 
-            { 
+            set
+            {
                 this._name = value;
                 Console.WriteLine("Duck name set to {0}.", value);
             }

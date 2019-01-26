@@ -60,17 +60,17 @@ namespace SkyLinq.Linq
             return source.Top(keySelector, Comparer<TKey>.Default, n);
         }
 
-        public static IEnumerable<TSource> Top<TSource, TKey>(this IEnumerable<TSource> source, 
+        public static IEnumerable<TSource> Top<TSource, TKey>(this IEnumerable<TSource> source,
             Func<TSource, TKey> keySelector,
             IComparer<TKey> comparer,
-            int n 
+            int n
         )
         {
             return source.TakeOrdered(n, keySelector, comparer, false);
         }
 
 
-        public static IEnumerable<TSource> Bottom<TSource>(this IEnumerable<TSource> source, 
+        public static IEnumerable<TSource> Bottom<TSource>(this IEnumerable<TSource> source,
             int n)
         {
             return source.Bottom(item => item, n);
@@ -82,7 +82,7 @@ namespace SkyLinq.Linq
             return source.Bottom(keySelector, Comparer<TKey>.Default, n);
         }
 
-        public static IEnumerable<TSource> Bottom<TSource, TKey>(this IEnumerable<TSource> source, 
+        public static IEnumerable<TSource> Bottom<TSource, TKey>(this IEnumerable<TSource> source,
             Func<TSource, TKey> keySelector,
             IComparer<TKey> comparer,
             int n
@@ -91,10 +91,10 @@ namespace SkyLinq.Linq
             return source.TakeOrdered(n, keySelector, comparer, true);
         }
 
-         private static IEnumerable<TSource> TakeOrdered<TSource, TKey>(this IEnumerable<TSource> source, 
+         private static IEnumerable<TSource> TakeOrdered<TSource, TKey>(this IEnumerable<TSource> source,
             int n,
             Func<TSource, TKey> keySelector,
-            IComparer<TKey> comparer, 
+            IComparer<TKey> comparer,
             bool ascending)
         {
             Func<bool, bool> predicate;

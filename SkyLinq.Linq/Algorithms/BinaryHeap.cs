@@ -102,7 +102,7 @@ namespace SkyLinq.Linq.Algoritms
             TSource ret = Peak();
             _size--;
             if (_size > 1)
-            { 
+            {
                 _a[0] = _a[_size];
                 SiftDown(_a, 0, _size - 1, _keySelector, _comparer, _heapPropertyPredicate);
             }
@@ -167,9 +167,9 @@ namespace SkyLinq.Linq.Algoritms
         /// <param name="a"></param>
         /// <param name="size"></param>
         /// <param name="predicate"></param>
-        public static void SortHeapified(TSource[] a, 
-            int size, 
-            Func<TSource, TKey> keySelector, 
+        public static void SortHeapified(TSource[] a,
+            int size,
+            Func<TSource, TKey> keySelector,
             Func<bool, bool> predicate)
         {
             SortHeapified(a, size, keySelector, Comparer<TKey>.Default, predicate);
@@ -182,10 +182,10 @@ namespace SkyLinq.Linq.Algoritms
         /// <param name="size"></param>
         /// <param name="comparer"></param>
         /// <param name="predicate"></param>
-        public static void SortHeapified(TSource[] a, 
-            int size, 
-            Func<TSource, TKey> keySelector, 
-            IComparer<TKey> comparer, 
+        public static void SortHeapified(TSource[] a,
+            int size,
+            Func<TSource, TKey> keySelector,
+            IComparer<TKey> comparer,
             Func<bool, bool> predicate)
         {
             int end = size - 1;
@@ -239,7 +239,7 @@ namespace SkyLinq.Linq.Algoritms
             }
         }
 
-        private static void SiftDown(TSource[] a, int start, int end, Func<TSource, TKey> keySelector, IComparer<TKey> comparer, Func<bool, bool> predicate) 
+        private static void SiftDown(TSource[] a, int start, int end, Func<TSource, TKey> keySelector, IComparer<TKey> comparer, Func<bool, bool> predicate)
         {
             int root = start;
             while (root * 2 + 1 <=end) //while the root has at least one child

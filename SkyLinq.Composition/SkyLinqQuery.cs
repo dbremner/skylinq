@@ -86,7 +86,7 @@ namespace SkyLinq.Composition
         {
             get { return typeof(TElement); }
         }
-        
+
         public override IQueryProvider Provider
         {
             get { return _provider; }

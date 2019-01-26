@@ -135,7 +135,7 @@ namespace LINQPadHost
             //Add Linq pad default assemblies
             string[] linqPadAssemblies = new string[] {
                     "System.dll",
-	                "Microsoft.CSharp.dll",  
+	                "Microsoft.CSharp.dll",
 	                "System.Core.dll",
 	                "System.Data.dll",
 	                "System.Transactions.dll",
