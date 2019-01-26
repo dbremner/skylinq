@@ -7,9 +7,9 @@ using System.IO;
 
 namespace SkyLinq.Example
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             //new LingToGraphExample().Run();
 

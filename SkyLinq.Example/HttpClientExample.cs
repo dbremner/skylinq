@@ -8,7 +8,7 @@ using System.Net.Http.Headers;
 
 namespace SkyLinq.Example
 {
-    class HttpClientExample : IExample
+    internal class HttpClientExample : IExample
     {
         public void Run()
         {

@@ -6,7 +6,7 @@ namespace SkyLinq.Linq.Test
     [TestClass]
     public sealed class LinqExtTest
     {
-        int[] _data;
+        private int[] _data;
         [TestInitialize]
         public void SetUp()
         {

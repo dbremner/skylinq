@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SkyLinq.Example
 {
-    interface IExample
+    internal interface IExample
     {
         void Run();
     }
