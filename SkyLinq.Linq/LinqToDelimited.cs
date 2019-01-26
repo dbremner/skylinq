@@ -14,8 +14,8 @@ namespace SkyLinq.Linq
 
     public class ColumnMapper
     {
-        protected string[] _headers;
-        protected IDictionary<string, int> _headersDictionary;
+        protected readonly string[] _headers;
+        protected readonly IDictionary<string, int> _headersDictionary;
         public ColumnMapper(string[] headers)
         {
             this._headers = headers;
@@ -53,8 +53,8 @@ namespace SkyLinq.Linq
 
     public class Record : IReadOnlyDictionary<string, string>
     {
-        protected ColumnMapper _mapper;
-        protected string[] _fields;
+        protected readonly ColumnMapper _mapper;
+        protected readonly string[] _fields;
 
         public Record(ColumnMapper mapper, string[] fields)
         {

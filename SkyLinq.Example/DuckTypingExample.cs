@@ -64,7 +64,7 @@ namespace SkyLinq.Example
     //The DuckTypingProxyFactory should generate a class exactly like the following
     public class DuckProxyExample : IMyDuck
     {
-        OtherDuck target;
+        readonly OtherDuck target;
         public DuckProxyExample(OtherDuck duck)
         {
             target = duck;

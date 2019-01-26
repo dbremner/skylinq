@@ -11,7 +11,7 @@ namespace SkyLinq.Web.Controllers
 {
     public sealed class LogApiController : ApiController
     {
-        private LogApiModel _model = new LogApiModel();
+        private readonly LogApiModel _model = new LogApiModel();
 
         public IEnumerable<IDictionary<string, object>> Get(string report)
         {

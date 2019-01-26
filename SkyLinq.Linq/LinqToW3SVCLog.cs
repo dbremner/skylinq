@@ -7,7 +7,7 @@ namespace SkyLinq.Linq
 {
     public sealed class W3SVCLogColumnMapper : ColumnMapper
     {
-        private int[] masterToActualMap = Enumerable.Repeat(-1, LinqToW3SVCLog.masterDict.Keys.Count).ToArray();
+        private readonly int[] masterToActualMap = Enumerable.Repeat(-1, LinqToW3SVCLog.masterDict.Keys.Count).ToArray();
 
         public W3SVCLogColumnMapper(string[] headers)
             : base(headers)

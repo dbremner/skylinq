@@ -24,9 +24,9 @@ namespace SkyLinq.Composition
 
     internal sealed class SkyLinqQuery<TElement> : SkyLinqQuery, IOrderedQueryable<TElement>
     {
-        private IQueryProvider _provider;
-        private Expression _expression;
-        private IEnumerable<TElement> _elements;
+        private readonly IQueryProvider _provider;
+        private readonly Expression _expression;
+        private readonly IEnumerable<TElement> _elements;
 
         internal SkyLinqQuery(IEnumerable<TElement> elements)
         {

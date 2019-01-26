@@ -15,10 +15,10 @@ namespace SkyLinq.Linq.Algoritms
 
     public sealed class BinaryHeap<TSource, TKey>
     {
-        private TSource[] _a;
+        private readonly TSource[] _a;
         private int _size;
-        private Func<TSource, TKey> _keySelector;
-        private IComparer<TKey> _comparer;
+        private readonly Func<TSource, TKey> _keySelector;
+        private readonly IComparer<TKey> _comparer;
         private Func<bool, bool> _heapPropertyPredicate;
 
         /// <summary>
