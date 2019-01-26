@@ -9,7 +9,7 @@ using System.Threading;
 
 namespace SkyLinq.Composition
 {
-    public class DuckTypingProxyFactory
+    public sealed class DuckTypingProxyFactory
     {
         #region static members
         private static readonly IDictionary<Tuple<Type, Type>, Type> _typeCache = new Dictionary<Tuple<Type, Type>, Type>();

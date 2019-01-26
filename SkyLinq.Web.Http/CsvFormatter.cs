@@ -12,7 +12,7 @@ using System.Net;
 
 namespace SkyLinq.Web.Http
 {
-    public class CsvFormatter : BufferedMediaTypeFormatter 
+    public sealed class CsvFormatter : BufferedMediaTypeFormatter 
     {
         public CsvFormatter()
         {

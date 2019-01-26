@@ -22,7 +22,7 @@ namespace SkyLinq.Composition
         public abstract IEnumerator GetEnumerator();
     }
 
-    internal class SkyLinqQuery<TElement> : SkyLinqQuery, IOrderedQueryable<TElement>
+    internal sealed class SkyLinqQuery<TElement> : SkyLinqQuery, IOrderedQueryable<TElement>
     {
         private IQueryProvider _provider;
         private Expression _expression;

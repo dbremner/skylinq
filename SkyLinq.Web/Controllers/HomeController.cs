@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace SkyLinq.Web.Controllers
 {
-    public class HomeController : Controller
+    public sealed class HomeController : Controller
     {
         public ActionResult Index()
         {

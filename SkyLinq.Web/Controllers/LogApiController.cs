@@ -9,7 +9,7 @@ using System.IO;
 
 namespace SkyLinq.Web.Controllers
 {
-    public class LogApiController : ApiController
+    public sealed class LogApiController : ApiController
     {
         private LogApiModel _model = new LogApiModel();
 

@@ -5,9 +5,9 @@ using System.Text;
 
 namespace SkyLinq.Linq
 {
-    public class W3SVCLogColumnMapper : ColumnMapper
+    public sealed class W3SVCLogColumnMapper : ColumnMapper
     {
-        protected int[] masterToActualMap = Enumerable.Repeat(-1, LinqToW3SVCLog.masterDict.Keys.Count).ToArray();
+        private int[] masterToActualMap = Enumerable.Repeat(-1, LinqToW3SVCLog.masterDict.Keys.Count).ToArray();
 
         public W3SVCLogColumnMapper(string[] headers)
             : base(headers)
@@ -54,7 +54,7 @@ namespace SkyLinq.Linq
     }
 
 
-    public class W3SVCLogRecord : Record, IW3SVCLogRecord
+    public sealed class W3SVCLogRecord : Record, IW3SVCLogRecord
     {
         public W3SVCLogRecord(W3SVCLogColumnMapper mapper, string[] fields) : base(mapper, fields) { }
 

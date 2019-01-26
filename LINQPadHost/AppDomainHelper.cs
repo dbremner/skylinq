@@ -10,7 +10,7 @@ using System.Text.RegularExpressions;
 
 namespace LINQPadHost
 {
-    public class AppDomainHelper : MarshalByRefObject
+    public sealed class AppDomainHelper : MarshalByRefObject
     {
         public ILinqpadQuery CreateQuery(byte[] assembly)
         {

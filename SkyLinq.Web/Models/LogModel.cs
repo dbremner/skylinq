@@ -9,7 +9,7 @@ using SkyLinq.Linq;
 
 namespace SkyLinq.Web.Models
 {
-    public class LogModel
+    public sealed class LogModel
     {
         public IEnumerable<string[]> GetReports()
         {

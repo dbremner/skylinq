@@ -10,7 +10,7 @@ using System.Web.Mvc;
 
 namespace SkyLinq.Web.Controllers
 {
-    public class SkyLINQPadController : Controller
+    public sealed class SkyLINQPadController : Controller
     {
         // GET: SkyLINGPad
         public ActionResult Index()

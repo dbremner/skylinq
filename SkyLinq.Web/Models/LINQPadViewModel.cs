@@ -13,7 +13,7 @@ namespace SkyLinq.Web.Models
     }
 
 
-    public class LINQPadViewModel
+    public sealed class LINQPadViewModel
     {
         public KindEnum Kind { get; set; }
         [DataType(DataType.MultilineText)]

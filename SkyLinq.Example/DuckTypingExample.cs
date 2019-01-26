@@ -8,7 +8,7 @@ using SkyLinq.Composition;
 namespace SkyLinq.Example
 {
     //Note that the Other Duck class does not implement any interface
-    public class OtherDuck
+    public sealed class OtherDuck
     {
         private string _name;
 

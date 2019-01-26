@@ -9,7 +9,7 @@ using SkyLinq.Composition;
 
 namespace SkyLinq.Example
 {
-    public class LinqToW3SVCLogExample : IExample
+    public sealed class LinqToW3SVCLogExample : IExample
     {
         public void Run()
         {

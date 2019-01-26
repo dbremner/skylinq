@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SkyLinq.Example
 {
-    public class LINQPadHostExample : IExample
+    public sealed class LINQPadHostExample : IExample
     {
         public void Run()
         {

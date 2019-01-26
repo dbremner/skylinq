@@ -14,7 +14,7 @@ using System.Diagnostics;
 
 namespace SkyLinq.Web.Models
 {
-    public class LogApiModel
+    public sealed class LogApiModel
     {
         private IEnumerable<string> _lines;
         public LogApiModel()

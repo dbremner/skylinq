@@ -7,7 +7,7 @@ using System.Collections;
 
 namespace LINQPadHost
 {
-    public class IndentTextSerializer : ITextSerializer
+    public sealed class IndentTextSerializer : ITextSerializer
     {
         public void Serialize(TextWriter textWriter, object o)
         {

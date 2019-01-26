@@ -13,7 +13,7 @@ namespace SkyLinq.Linq.Algoritms
         MinHeap
     }
 
-    public class BinaryHeap<TSource, TKey>
+    public sealed class BinaryHeap<TSource, TKey>
     {
         private TSource[] _a;
         private int _size;

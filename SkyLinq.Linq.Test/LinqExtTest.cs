@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace SkyLinq.Linq.Test
 {
     [TestClass]
-    public class LinqExtTest
+    public sealed class LinqExtTest
     {
         int[] _data;
         [TestInitialize]

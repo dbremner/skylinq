@@ -11,7 +11,7 @@ using SkyLinq.Linq;
 
 namespace SkyLinq.Composition
 {
-    internal class SkyLinqRewriter : ExpressionVisitor
+    internal sealed class SkyLinqRewriter : ExpressionVisitor
     {
         private static volatile ILookup<string, MethodInfo> _seqMethods;
 
@@ -241,7 +241,7 @@ namespace SkyLinq.Composition
             return Expression.Constant(value.Enumerable, publicType);
         }
 
-        protected ReadOnlyCollection<Expression> VisitExpressionList(ReadOnlyCollection<Expression> original)
+        private ReadOnlyCollection<Expression> VisitExpressionList(ReadOnlyCollection<Expression> original)
         {
             List<Expression> expressions = null;
             int num = 0;

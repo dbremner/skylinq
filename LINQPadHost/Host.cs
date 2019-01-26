@@ -17,7 +17,7 @@ using System.Xml.Serialization;
 
 namespace LINQPadHost
 {
-    public class Host
+    public sealed class Host
     {
         public void Run<T>(string file, TextWriter tw) where T : ITextSerializer, new()
         {

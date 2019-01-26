@@ -9,7 +9,7 @@ using System.Reflection;
 
 namespace SkyLinq.Composition
 {
-    internal class SkyLinqQueryProvider : IQueryProvider
+    internal sealed class SkyLinqQueryProvider : IQueryProvider
     {
         private IEnumerable _enumerable;
 
