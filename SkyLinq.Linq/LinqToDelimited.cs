@@ -161,7 +161,7 @@ namespace SkyLinq.Linq
         /// Split line into fields. LineParser function is responsible for parsing the line and extract the header
         /// </summary>
         /// <param name="lines"></param>
-        /// <param name="lineParser">The line parser function returns a Duple of line type and string array of fiields. The line type
+        /// <param name="lineParser">The line parser function returns a Duple of line type and string array of fields. The line type
         /// could be Comment, Header or Data.</param>
         /// <returns></returns>
         public static IEnumerable<Record> EnumRecords(this IEnumerable<string> lines, Func<int, string, Tuple<LineType, string[]>> lineParser)

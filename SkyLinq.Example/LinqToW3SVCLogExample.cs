@@ -20,7 +20,7 @@ namespace SkyLinq.Example
 
             //QueryW3SVCLogUsingLinqToText(lines);
             //QueryW3SVCLogUsingLinqToDelimited(lines);
-            //QueryW3SVCLogUisngLingToW3SVCLog(lines);
+            //QueryW3SVCLogUsingLingToW3SVCLog(lines);
             QueryW3SVCLogUisngSkyLinqQueryable(lines);
         }
 

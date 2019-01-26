@@ -48,7 +48,7 @@ namespace SkyLinq.Linq.Algoritms
         }
 
         /// <summary>
-        /// Construting an empty heap
+        /// Constructing an empty heap
         /// </summary>
         /// <param name="capacity">Capacity of the Heap</param>
         /// <param name="heapProperty">Indicates whether it is a max-heap or min-heap.</param>
@@ -57,7 +57,7 @@ namespace SkyLinq.Linq.Algoritms
         { }
 
         /// <summary>
-        /// Construting an empty heap
+        /// Constructing an empty heap
         /// </summary>
         /// <param name="capacity">Capacity of the Heap</param>
         /// <param name="heapProperty">Indicates whether it is a max-heap or min-heap.</param>
@@ -220,7 +220,7 @@ namespace SkyLinq.Linq.Algoritms
             SortHeapified(a, size, keySelector, comparer, predicate);
         }
 
-        //Move up the element at i until it satifies the heap property
+        //Move up the element at i until it satisfies the heap property
         private static void SiftUp(TSource[]a, int start, int end, Func<TSource, TKey> keySelector, IComparer<TKey> comparer, Func<bool, bool> predicate)
         {
             int child = end;
@@ -260,7 +260,7 @@ namespace SkyLinq.Linq.Algoritms
                 if (swap != root)
                 {
                     Swap(a, root, swap);
-                    root = swap; //Repeart to continue sifitng down the child now
+                    root = swap; //Repeat to continue shifting down the child now
                 }
                 else
                 {
