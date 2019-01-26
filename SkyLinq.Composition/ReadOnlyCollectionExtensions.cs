@@ -15,8 +15,8 @@ namespace SkyLinq.Composition
             {
                 return ReadOnlyCollectionExtensions.DefaultReadOnlyCollection<T>.Empty;
             }
-            ReadOnlyCollection<T> ts = sequence as ReadOnlyCollection<T>;
-            if (ts != null)
+
+            if (sequence is ReadOnlyCollection<T> ts)
             {
                 return ts;
             }

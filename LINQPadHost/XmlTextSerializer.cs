@@ -20,8 +20,7 @@ namespace LINQPadHost
             string s = o as string;
             if (s == null)
             {
-                IEnumerable seq = o as IEnumerable;
-                if (seq != null)
+                if (o is IEnumerable seq)
                 {
                     o = seq.Cast<object>().ToList();
                 }

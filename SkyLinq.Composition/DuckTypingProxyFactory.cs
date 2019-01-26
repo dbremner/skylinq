@@ -44,9 +44,7 @@ namespace SkyLinq.Composition
             ValidateParams(typeOfIMyDuck, otherDuck);
 
             //If obj already implements TProxy, simply return it
-            TIMyDuck o = otherDuck as TIMyDuck;
-
-            if (o != null)
+            if (otherDuck is TIMyDuck o)
             {
                 return o;
             }

@@ -29,8 +29,7 @@ namespace LINQPadHost
                 }
                 else
                 {
-                    IEnumerable seq = o as IEnumerable;
-                    if (seq != null)
+                    if (o is IEnumerable seq)
                     {
                         foreach (object child in seq)
                         {

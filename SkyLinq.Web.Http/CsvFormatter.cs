@@ -56,8 +56,7 @@ namespace SkyLinq.Web.Http
         {
             using (var writer = new StreamWriter(writeStream))
             {
-                var rows = value as IEnumerable;
-                if (rows != null)
+                if (value is IEnumerable rows)
                 {
                     int rowNo = 0;
                     //row must be IDictionary which support IEnumerable
