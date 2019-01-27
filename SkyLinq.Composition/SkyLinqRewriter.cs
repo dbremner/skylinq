@@ -97,11 +97,11 @@ namespace SkyLinq.Composition
 
         internal static MethodInfo FindMethod(Type type, string name, ReadOnlyCollection<Expression> args, Type[] typeArgs, BindingFlags flags)
         {
-            MethodInfo[] array = (
+            var array = (
                 from m in type.GetMethods(flags)
                 where m.Name == name
-                select m).ToArray();
-            if (array.Length == 0)
+                select m).ToList();
+            if (array.Count == 0)
             {
                 throw new ArgumentException("Unable to find method " + name + " on type " + type);
             }
@@ -280,7 +280,7 @@ namespace SkyLinq.Composition
             {
                 return m;
             }
-            expressions.ToArray();
+            expressions.ToList();
             if (m.Method.IsGenericMethod)
             {
                 genericArguments = m.Method.GetGenericArguments();

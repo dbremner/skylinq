@@ -106,7 +106,7 @@ namespace SkyLinq.Web.Areas.HelpPage
             ParameterInfo[] parameters = method.GetParameters();
             if (parameters.Length != 0)
             {
-                string[] parameterTypeNames = parameters.Select(param => GetTypeName(param.ParameterType)).ToArray();
+                var parameterTypeNames = parameters.Select(param => GetTypeName(param.ParameterType)).ToList();
                 name += String.Format(CultureInfo.InvariantCulture, "({0})", String.Join(",", parameterTypeNames));
             }
 
@@ -146,7 +146,7 @@ namespace SkyLinq.Web.Areas.HelpPage
 
                 // Trim the generic parameter counts from the name
                 genericTypeName = genericTypeName.Substring(0, genericTypeName.IndexOf('`'));
-                string[] argumentTypeNames = genericArguments.Select(t => GetTypeName(t)).ToArray();
+                var argumentTypeNames = genericArguments.Select(t => GetTypeName(t)).ToList();
                 name = String.Format(CultureInfo.InvariantCulture, "{0}{{{1}}}", genericTypeName, String.Join(",", argumentTypeNames));
             }
             if (type.IsNested)

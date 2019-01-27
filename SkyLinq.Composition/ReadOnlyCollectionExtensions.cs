@@ -20,7 +20,7 @@ namespace SkyLinq.Composition
             {
                 return ts;
             }
-            return new ReadOnlyCollection<T>(sequence.ToArray());
+            return new ReadOnlyCollection<T>(sequence.ToList());
         }
 
         private static class DefaultReadOnlyCollection<T>
