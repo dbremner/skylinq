@@ -5,7 +5,7 @@ namespace SkyLinq.Linq.Test
 {
     public sealed class LinqExtTest
     {
-        private int[] _data;
+        private readonly int[] _data;
 
         public LinqExtTest()
         {
