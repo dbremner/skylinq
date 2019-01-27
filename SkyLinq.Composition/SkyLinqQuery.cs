@@ -35,7 +35,7 @@ namespace SkyLinq.Composition
                 throw new ArgumentNullException(nameof(elements));
             }
 
-            IQueryable<TElement> queryable = elements.AsQueryable<TElement>();
+            IQueryable<TElement> queryable = elements.AsQueryable();
             _elements = elements;
             _provider = new SkyLinqQueryProvider(queryable);
             _expression = Expression.Constant(this);

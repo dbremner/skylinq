@@ -146,7 +146,7 @@ namespace SkyLinq.Linq
         public static Tuple<TSource, long> MaxWithIndex<TSource>(this IEnumerable<TSource> source, IComparer<TSource> comparer)
         {
             Func<int, bool> continuePredicate = i => i <= 0;
-            return MaxMinWithIndex<TSource>(source, comparer, continuePredicate);
+            return MaxMinWithIndex(source, comparer, continuePredicate);
         }
 
         public static Tuple<TSource, long> MinWithIndex<TSource>(this IEnumerable<TSource> source)
@@ -156,7 +156,7 @@ namespace SkyLinq.Linq
         public static Tuple<TSource, long> MinWithIndex<TSource>(this IEnumerable<TSource> source, IComparer<TSource> comparer)
         {
             Func<int, bool> continuePredicate = i => i >= 0;
-            return MaxMinWithIndex<TSource>(source, comparer, continuePredicate);
+            return MaxMinWithIndex(source, comparer, continuePredicate);
         }
 
         private static Tuple<TSource,long> MaxMinWithIndex<TSource>(IEnumerable<TSource> source, IComparer<TSource> comparer, Func<int, bool> contPredicate)

@@ -81,9 +81,9 @@ namespace SkyLinq.Composition
         {
             if (_seqMethods == null)
             {
-                _seqMethods = ((IEnumerable<MethodInfo>)typeof(Enumerable).GetMethods(BindingFlags.Static | BindingFlags.Public)).ToLookup<MethodInfo, string>((MethodInfo m) => m.Name);
+                _seqMethods = ((IEnumerable<MethodInfo>)typeof(Enumerable).GetMethods(BindingFlags.Static | BindingFlags.Public)).ToLookup((MethodInfo m) => m.Name);
             }
-            MethodInfo methodInfo = _seqMethods[name].FirstOrDefault<MethodInfo>((MethodInfo m) => ArgsMatch(m, args, typeArgs));
+            MethodInfo methodInfo = _seqMethods[name].FirstOrDefault((MethodInfo m) => ArgsMatch(m, args, typeArgs));
             if (methodInfo == null)
             {
                 throw new ArgumentException("Unable to find enumerable method " + name);
@@ -100,12 +100,12 @@ namespace SkyLinq.Composition
             MethodInfo[] array = (
                 from m in type.GetMethods(flags)
                 where m.Name == name
-                select m).ToArray<MethodInfo>();
+                select m).ToArray();
             if (array.Length == 0)
             {
                 throw new ArgumentException("Unable to find method " + name + " on type " + type);
             }
-            MethodInfo methodInfo = array.FirstOrDefault<MethodInfo>((MethodInfo m) => ArgsMatch(m, args, typeArgs));
+            MethodInfo methodInfo = array.FirstOrDefault((MethodInfo m) => ArgsMatch(m, args, typeArgs));
             if (methodInfo == null)
             {
                 throw new ArgumentException("Unable to matching arguments for method " + name + " on type " + type);
@@ -146,7 +146,7 @@ namespace SkyLinq.Composition
                 }
                 if (expressions != null)
                 {
-                    argList = expressions.ToReadOnlyCollection<Expression>();
+                    argList = expressions.ToReadOnlyCollection();
                 }
             }
             return argList;
@@ -268,7 +268,7 @@ namespace SkyLinq.Composition
             {
                 return original;
             }
-            return expressions.ToReadOnlyCollection<Expression>();
+            return expressions.ToReadOnlyCollection();
         }
 
         protected override Expression VisitMethodCall(MethodCallExpression m)
@@ -280,7 +280,7 @@ namespace SkyLinq.Composition
             {
                 return m;
             }
-            expressions.ToArray<Expression>();
+            expressions.ToArray();
             if (m.Method.IsGenericMethod)
             {
                 genericArguments = m.Method.GetGenericArguments();
