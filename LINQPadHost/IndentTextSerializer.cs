@@ -16,31 +16,26 @@ namespace LINQPadHost
 
         private void Serialize(TextWriter textWriter, object o, int indent)
         {
-            if (o == null)
+            switch (o)
             {
-                WriteLine(textWriter, "(null)", indent);
-            }
-            else
-            {
-                string s = o as string;
-                if (s != null)
-                {
+                case null:
+                    WriteLine(textWriter, "(null)", indent);
+                    break;
+                case string s:
                     WriteLine(textWriter, o, indent);
-                }
-                else
+                    break;
+                case IEnumerable seq:
                 {
-                    if (o is IEnumerable seq)
+                    foreach (object child in seq)
                     {
-                        foreach (object child in seq)
-                        {
-                            Serialize(textWriter, child, indent + 1);
-                        }
+                        Serialize(textWriter, child, indent + 1);
                     }
-                    else
-                    {
-                        WriteLine(textWriter, o, indent);
-                    }
+
+                    break;
                 }
+                default:
+                    WriteLine(textWriter, o, indent);
+                    break;
             }
         }
 

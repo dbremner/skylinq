@@ -11,16 +11,15 @@ namespace SkyLinq.Composition
     {
         internal static ReadOnlyCollection<T> ToReadOnlyCollection<T>(this IEnumerable<T> sequence)
         {
-            if (sequence == null)
+            switch (sequence)
             {
-                return ReadOnlyCollectionExtensions.DefaultReadOnlyCollection<T>.Empty;
+                case null:
+                    return ReadOnlyCollectionExtensions.DefaultReadOnlyCollection<T>.Empty;
+                case ReadOnlyCollection<T> ts:
+                    return ts;
+                default:
+                    return new ReadOnlyCollection<T>(sequence.ToList());
             }
-
-            if (sequence is ReadOnlyCollection<T> ts)
-            {
-                return ts;
-            }
-            return new ReadOnlyCollection<T>(sequence.ToList());
         }
 
         private static class DefaultReadOnlyCollection<T>
