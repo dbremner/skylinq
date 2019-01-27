@@ -49,12 +49,11 @@ namespace SkyLinq.Composition
                 return o;
             }
 
-            Type proxyType;
             Type typeOfOtherDuck = otherDuck.GetType();
             _cacheLock.EnterUpgradeableReadLock();
             try
             {
-                if (!_typeCache.TryGetValue(Tuple.Create(typeOfIMyDuck, typeOfOtherDuck), out proxyType))
+                if (!_typeCache.TryGetValue(Tuple.Create(typeOfIMyDuck, typeOfOtherDuck), out Type proxyType))
                 {
                     //Generate the proxyType here
                     if (!CanBeDuckTypedTo<TIMyDuck>(otherDuck))
