@@ -84,17 +84,14 @@ namespace SkyLinq.Linq
 
         public bool TryGetValue(string key, out string value)
         {
-            int columnNo;
-            if (_mapper.TryGetColumnNo(key, out columnNo))
-            {
-                value = _fields[columnNo];
-                return true;
-            }
-            else
+            if (!_mapper.TryGetColumnNo(key, out int columnNo))
             {
                 value = null;
                 return false;
             }
+
+            value = _fields[columnNo];
+            return true;
         }
 
         public IEnumerable<string> Values
