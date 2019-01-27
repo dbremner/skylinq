@@ -185,15 +185,15 @@ namespace SkyLinq.Linq
                 {
                     if (s.StartsWith("#Fields:"))
                     {
-                        return new Tuple<LineType, string[]>(LineType.Header, s.Substring(9).Split(new char[] {' '}, StringSplitOptions.RemoveEmptyEntries));
+                        return Tuple.Create(LineType.Header, s.Substring(9).Split(new char[] {' '}, StringSplitOptions.RemoveEmptyEntries));
                     }
                     else if (s.StartsWith("#"))
                     {
-                        return new Tuple<LineType, string[]>(LineType.Comments, new string[] { s });
+                        return Tuple.Create(LineType.Comments, new string[] { s });
                     }
                     else
                     {
-                        return new Tuple<LineType, string[]>(LineType.Data, s.Split(' '));
+                        return Tuple.Create(LineType.Data, s.Split(' '));
                     }
                 },
                 headers => new W3SVCLogColumnMapper(headers),

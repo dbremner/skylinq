@@ -54,7 +54,7 @@ namespace SkyLinq.Composition
             _cacheLock.EnterUpgradeableReadLock();
             try
             {
-                if (!_typeCache.TryGetValue(new Tuple<Type, Type>(typeOfIMyDuck, typeOfOtherDuck), out proxyType))
+                if (!_typeCache.TryGetValue(Tuple.Create(typeOfIMyDuck, typeOfOtherDuck), out proxyType))
                 {
                     //Generate the proxyType here
                     if (!CanBeDuckTypedTo<TIMyDuck>(otherDuck))
@@ -67,7 +67,7 @@ namespace SkyLinq.Composition
                     _cacheLock.EnterWriteLock();
                     try
                     {
-                        _typeCache.Add(new Tuple<Type, Type>(typeOfIMyDuck, typeOfOtherDuck), proxyType);
+                        _typeCache.Add(Tuple.Create(typeOfIMyDuck, typeOfOtherDuck), proxyType);
                     }
                     finally
                     {

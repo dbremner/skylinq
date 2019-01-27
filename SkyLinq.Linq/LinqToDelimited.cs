@@ -133,11 +133,11 @@ namespace SkyLinq.Linq
                 {
                     if (i == 1)
                     {
-                        return new Tuple<LineType,string[]>(LineType.Header, s.Split(delimiter));
+                        return Tuple.Create(LineType.Header, s.Split(delimiter));
                     }
                     else
                     {
-                        return new Tuple<LineType,string[]>(LineType.Data, s.Split(delimiter));
+                        return Tuple.Create(LineType.Data, s.Split(delimiter));
                     }
                 });
         }
