@@ -7,12 +7,6 @@ using System.Diagnostics;
 
 namespace SkyLinq.Linq.Algoritms
 {
-    public enum HeapProperty
-    {
-        MaxHeap,
-        MinHeap
-    }
-
     public sealed class BinaryHeap<TSource, TKey>
     {
         private readonly TSource[] _a;
