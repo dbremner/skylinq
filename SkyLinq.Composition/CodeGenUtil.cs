@@ -86,14 +86,15 @@ namespace SkyLinq.Composition
             il.Emit(OpCodes.Ldarg_0);
             il.Emit(OpCodes.Ldfld, targetField);
 
+            var parameters = mi.GetParameters();
             // Load the call parameters
-            for (int i = 0; i < mi.GetParameters().Length; i++)
+            for (int i = 0; i < parameters.Length; i++)
             {
                 CodeGenUtil.EmitLoadArgument(il, i);
             }
 
             // Make the call
-            MethodInfo callTarget = targetField.FieldType.GetMethod(mi.Name, mi.GetParameters().Select(pi => pi.ParameterType).ToArray());
+            MethodInfo callTarget = targetField.FieldType.GetMethod(mi.Name, parameters.Select(pi => pi.ParameterType).ToArray());
             il.Emit(OpCodes.Callvirt, callTarget);
 
             if (mi.ReturnType != typeof(void))
